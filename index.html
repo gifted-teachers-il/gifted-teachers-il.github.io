@@ -291,7 +291,9 @@
             max-width: 1200px;
         }
         .topbar img { display: block; height: auto; }
-        .topbar .logo-combined { width: 420px; max-width: 55%; }
+        .topbar .logos-pair { display: flex; align-items: center; gap: 18px; min-width: 0; }
+        .topbar .logo-sapir { height: 54px; width: auto; }
+        .topbar .logo-division { height: 58px; width: auto; }
         .top-actions {
             margin-inline-start: auto;
             display: flex;
@@ -543,14 +545,17 @@
         }
 
         @media (max-width: 1000px) {
-            .topbar .logo-combined { width: 340px; }
+            .topbar .logo-sapir { height: 46px; }
+            .topbar .logo-division { height: 48px; }
         }
 
         @media (max-width: 760px) {
             html { font-size: 112.5%; }
             body { font-size: 18px; }
             .topbar .wrap { flex-wrap: wrap; justify-content: space-between; gap: 6px 10px; padding: 6px 12px; }
-            .topbar .logo-combined { width: 100%; max-width: 380px; margin: 0 auto; }
+            .topbar .logos-pair { width: 100%; justify-content: space-between; gap: 10px; }
+            .topbar .logo-sapir { height: auto; width: 36%; }
+            .topbar .logo-division { height: auto; width: 60%; }
             .top-actions { width: 100%; margin: 0; justify-content: space-between; gap: 10px; }
             .contact-link { font-size: 0.85rem; white-space: normal; text-align: center; line-height: 1.2; }
             .join-btn { padding: 9px 14px; }
@@ -573,7 +578,10 @@
 
     <header class="topbar">
         <div class="wrap">
-            <img class="logo-combined" src="assets/logos-combined.png" width="767" height="95" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית | אגף א' לתלמידים מחוננים ומצטיינים, משרד החינוך">
+            <div class="logos-pair">
+                <img class="logo-sapir" src="assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
+                <img class="logo-division" src="assets/division-a-yellow.png" width="1200" height="222" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
+            </div>
             <div class="top-actions">
                 <a class="contact-link" href="#contact">רוצים שנחזור אליכם?</a>
                 <a class="join-btn" href="https://m3.sapir.ac.il/Portals/ex/registration/260" target="_blank" rel="noopener">להצטרפות</a>

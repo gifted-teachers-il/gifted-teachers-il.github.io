@@ -216,7 +216,9 @@
         }
 
         /* Logos */
+        .brand-logo { gap: 16px; }
         .brand-img { height: 46px; width: auto; max-width: 100%; display: block; }
+        .brand-img.division { height: 50px; }
         .nav-container { gap: 16px; }
         .nav-links { flex-wrap: nowrap; }
         .tab-btn {
@@ -971,7 +973,9 @@
             .main-container { padding: 20px 12px 48px; gap: 18px; }
             .nav-container { flex-direction: column; gap: 8px; }
             .brand-logo { justify-content: center; }
-            .brand-img { height: auto; width: min(360px, 100%); }
+            .brand-logo { width: 100%; justify-content: space-between; gap: 10px; }
+            .brand-img { height: auto; width: 36%; }
+            .brand-img.division { height: auto; width: 60%; }
             .nav-links { width: 100%; justify-content: center; gap: 4px; }
             .tab-btn { padding: 7px 14px; font-size: 0.92rem; }
             .cta-nav-btn { font-size: 0.9rem; padding: 7px 16px; }
@@ -1010,7 +1014,8 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="brand-logo" onclick="switchTab('home'); return false;">
-                <img class="brand-img" src="../assets/logos-combined.png" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית | אגף א' לתלמידים מחוננים ומצטיינים, משרד החינוך">
+                <img class="brand-img" src="../assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
+                <img class="brand-img division" src="../assets/division-a-outline.png" width="1200" height="179" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
             </a>
             <div class="nav-links">
                 <button class="tab-btn active" id="btnHome" onclick="switchTab('home')">על הקהילה</button>
