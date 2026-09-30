@@ -972,17 +972,15 @@
         .mobile-logos { display: none; }
         @media (max-width: 640px) {
             html { font-size: 120% !important; }
-            .mobile-logos {
-                display: flex;
-                flex-direction: column;
+            .brand-logo {
+                display: flex !important;
+                width: 100%;
+                justify-content: space-between;
                 align-items: center;
-                gap: 12px;
-                padding: 16px 14px 12px;
-                background: #fff;
+                gap: 8px !important;
             }
-            .mobile-logos img:first-child { width: 74%; height: auto; }
-            .mobile-logos img:last-child { width: 100%; height: auto; }
-            .brand-logo { display: none !important; }
+            .brand-img { width: 40% !important; height: auto !important; }
+            .brand-img.division { width: 57% !important; }
             .nav-container { padding: 8px 10px !important; }
             .nav-links {
                 display: grid !important;

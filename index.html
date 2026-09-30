@@ -586,8 +586,17 @@
             }
             .mobile-logos img:first-child { width: 74%; height: auto; }
             .mobile-logos img:last-child { width: 100%; height: auto; }
-            .topbar .logos-pair { display: none; }
-            .topbar .wrap { padding: 8px 10px; }
+            .mobile-logos { display: none; }
+            .topbar .wrap { padding: 8px 10px; gap: 8px; flex-wrap: wrap; }
+            .topbar .logos-pair {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+            }
+            .topbar .logo-sapir { width: 40%; height: auto; }
+            .topbar .logo-division { width: 57%; height: auto; }
             .top-actions {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
