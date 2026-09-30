@@ -968,6 +968,24 @@
         }
 
         span[dir="ltr"] { white-space: nowrap; }
+        /* Community name in the top bar */
+        .nav-title {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.15;
+            color: var(--primary);
+            text-align: center;
+            flex: none;
+        }
+        .nt-small { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+        .nt-big { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em; }
+        @media (max-width: 1150px) and (min-width: 641px) {
+            .nav-container { flex-wrap: wrap; }
+            .nav-title { order: 3; width: 100%; flex-direction: row; justify-content: center; gap: 8px; align-items: baseline; }
+        }
+
         /* Phone layout */
         .mobile-logos { display: none; }
         @media (max-width: 640px) {
@@ -988,11 +1006,14 @@
                 gap: 6px !important;
                 width: 100%;
             }
+            .nav-title { flex-direction: row; justify-content: center; align-items: baseline; gap: 6px; width: 100%; }
+            .nt-small { font-size: 0.8rem; }
+            .nt-big { font-size: 1.2rem; }
             .tab-btn, .cta-nav-btn {
                 width: 100%;
-                min-height: 50px;
-                padding: 8px 4px !important;
-                font-size: 0.95rem !important;
+                min-height: 40px;
+                padding: 5px 4px !important;
+                font-size: 0.85rem !important;
                 border-radius: 12px !important;
                 white-space: normal;
                 line-height: 1.2;
@@ -1059,6 +1080,7 @@
                 <img class="brand-img" src="../assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
                 <img class="brand-img division" src="../assets/division-a-outline.png" width="1200" height="179" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
             </a>
+            <p class="nav-title"><span class="nt-small">קהילת מורות ומורי</span> <span class="nt-big">מתמטיקה למחוננים</span></p>
             <div class="nav-links">
                 <button class="tab-btn active" id="btnHome" onclick="switchTab('home')">על הקהילה</button>
                 <button class="tab-btn" id="btnSchedule" onclick="switchTab('schedule')">לוח מפגשים</button>
