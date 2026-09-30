@@ -558,6 +558,10 @@
             .footer-row { justify-content: center; text-align: center; }
         }
 
+        /* Interest form switched off (see data-form on <body>) */
+        body[data-form="off"] .contact,
+        body[data-form="off"] .contact-link { display: none !important; }
+
         /* ---------- Phone layout ---------- */
         .mobile-logos { display: none; }
         @media (max-width: 760px) {
@@ -577,7 +581,7 @@
             .topbar .wrap { padding: 8px 10px; }
             .top-actions {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
                 gap: 8px;
                 width: 100%;
             }
@@ -636,7 +640,8 @@
         }
     </style>
 </head>
-<body>
+<!-- data-form="off": the interest form is hidden for now (registration via Sapir). Change to "on" to bring it back. -->
+<body data-form="off">
 
     <a class="skip-link" href="#communities">דלגו לרשימת הקהילות</a>
 
@@ -1336,6 +1341,7 @@
             const contactHome = contactBox.parentNode;
 
             function maybeShowForm() {
+                if (document.body.dataset.form === 'off') return;
                 if (store(REG_KEY_SEEN_FORM) === '1' || store(REG_KEY_SENT) === '1') return;
                 if (anyDialogOpen()) return;
                 if (videoShownAt && Date.now() - videoShownAt < 30000) return;
