@@ -2,3 +2,6 @@
 *.csv
 *.xlsx
 *.xls
+
+# Local-only source material (original Word files, photos, zips)
+_source/
