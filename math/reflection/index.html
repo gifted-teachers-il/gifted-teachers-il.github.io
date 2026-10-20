@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>רפלקציה | קהילת מורות ומורי מתמטיקה למחוננים</title>
+    <link rel="icon" href="/assets/icon-math.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/icon-math-180.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAF8F5;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3531;
+            --text-secondary: #5A6561;
+            --primary: #344E41;
+            --primary-hover: #263A30;
+            --accent-warm: #C86B4B;
+            --accent-light: #F4EBE1;
+            --border-color: #E6E0D6;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --shadow-subtle: 0 4px 20px -2px rgba(44, 53, 49, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Rubik', 'Assistant', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top bar: logos + community name */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .brand-logo { display: flex; align-items: center; gap: 10px; }
+        .brand-img { height: 40px; width: auto; }
+        .nav-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.15;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .nt-small { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+        .nt-big { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em; }
+
+        .main-container {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 32px 20px 64px;
+        }
+
+        /* Form card (as on the community page) */
+        .form-card, .success-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .form-header {
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        .form-header h1 { font-size: 1.6rem; color: var(--primary); margin-bottom: 8px; }
+        .form-header p { font-size: 0.98rem; color: var(--text-secondary); }
+        .meeting-tag {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .field-group { margin-bottom: 24px; }
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        label .num { color: var(--accent-warm); margin-left: 4px; }
+        label .required { color: var(--accent-warm); margin-right: 2px; }
+        .helper-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.95rem;
+            padding: 12px 14px;
+            color: var(--text-primary);
+            background-color: #FCFBF9;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        input[type="text"]:focus, textarea:focus {
+            background-color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 78, 65, 0.12);
+        }
+        textarea { min-height: 96px; resize: vertical; }
+        .name-group {
+            padding-bottom: 24px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(52, 78, 65, 0.2);
+        }
+        .submit-btn:hover { background-color: var(--primary-hover); }
+        .submit-btn:disabled { background-color: #A3B18A; cursor: not-allowed; }
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error-message {
+            display: none;
+            background-color: #FEECEB;
+            color: #C62828;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            text-align: center;
+            border: 1px solid #F6CBCA;
+        }
+
+        .success-card { display: none; text-align: center; padding: 44px 32px; }
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .success-card h2 { color: var(--primary); font-size: 1.5rem; margin-bottom: 12px; }
+        .success-card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 24px; }
+        .back-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 999px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: auto;
+        }
+
+        /* Phone layout */
+        @media (max-width: 640px) {
+            html { font-size: 120%; }
+            .nav-container { flex-direction: column; gap: 6px; padding: 8px 10px; }
+            .brand-logo { width: 100%; justify-content: space-between; gap: 8px; }
+            .brand-img { width: 40%; height: auto; }
+            .brand-img.division { width: 57%; }
+            .nav-title { flex-direction: row; gap: 6px; align-items: baseline; }
+            .nt-small { font-size: 0.8rem; }
+            .nt-big { font-size: 1.2rem; }
+            .main-container { padding: 16px 10px 40px; }
+            .form-card, .success-card { padding: 22px 16px; }
+            .form-header h1 { font-size: 1.4rem; }
+            .helper-text { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand-logo">
+                <img class="brand-img" src="../../assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
+                <img class="brand-img division" src="../../assets/division-a-outline.png" width="1200" height="179" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
+            </div>
+            <a class="nav-title" href="../"><span class="nt-small">קהילת מורות ומורי</span> <span class="nt-big">מתמטיקה למחוננים</span></a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <main class="form-card" id="formContainer">
+            <div class="form-header">
+                <span class="meeting-tag" id="meetingTag"></span>
+                <h1>רפלקציה: בונים את הקהילה יחד</h1>
+                <p>כדי שהקהילה תהיה מותאמת בדיוק לצרכים שלכן ושלכם, נשמח שתמלאו את טופס הרפלקציה הקצר.</p>
+            </div>
+
+            <form id="reflectionForm" novalidate>
+                <div class="field-group name-group">
+                    <label for="fullName">שם מלא <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" autocomplete="name" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="takeaway"><span class="num">1.</span>עם מה אתם יוצאים מהמפגש היום?</label>
+                    <div class="helper-text">בכנות, מה עבד לכם טוב? מה פחות? נשמח לדיוקים והארות</div>
+                    <textarea id="takeaway" name="takeaway"></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="wish"><span class="num">2.</span>מה הייתם רוצים לקבל מהקהילה?</label>
+                    <div class="helper-text">נסו להיות כמה שיותר ספציפיים: נושא מתמטי מסוים, דילמה מהכיתה, סוג של משימה או כלי שהייתם רוצים לפגוש.</div>
+                    <textarea id="wish" name="wish"></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="contribute"><span class="num">3.</span>מה תוכלו לתרום?</label>
+                    <div class="helper-text">מערך שיעור שעבד מצוין, חידה יפה שפיצחתם, תובנה משנת הוראה, או הצגת נושא באחד המפגשים?</div>
+                    <textarea id="contribute" name="contribute"></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="knowledge"><span class="num">4.</span>איך נכון לנהל את גוף הידע שלנו?</label>
+                    <div class="helper-text">רעיונות לארגון המאגר באתר הקהילה ב-GitHub, תיוג לפי נושאים וגילאים, ואיך לשמור על קשר בין המפגשים?</div>
+                    <textarea id="knowledge" name="knowledge"></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="curious"><span class="num">5.</span>מה או מי מסקרן אתכם?</label>
+                    <div class="helper-text">אנשי מקצוע שהייתם רוצים שנארח, משהו מהמפגש היום שסיקרן אתכם, או אולי קולגה שהייתם רוצים להכיר יותר?</div>
+                    <textarea id="curious" name="curious"></textarea>
+                </div>
+
+                <div id="submitError" class="error-message"></div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-text">שליחה</span>
+                    <div class="spinner" id="btnSpinner"></div>
+                </button>
+            </form>
+        </main>
+
+        <div class="success-card" id="successCard">
+            <div class="success-icon">✓</div>
+            <h2>תודה רבה!</h2>
+            <p>התשובות התקבלו. נתראה במפגש הבא!</p>
+            <a class="back-btn" href="../">לדף הקהילה</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>קהילת מורות ומורי מתמטיקה למחוננים | תשפ"ז | בהובלת תאיר פניני ולירון מיכאלי</p>
+    </footer>
+
+    <script>
+        // Same Apps Script web app as the registration form; doPost sends form:'reflection' to the "רפלקציה" tab
+        // (_source/math/apps-script-math-reflection.gs)
+        const GOOGLE_SHEETS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPOfPSucQ3p-Nb5J6K4ra-MxWv8JumNOjfV0TrpkNI-AK9COWuX2wHvwHvAZI5vJ30/exec";
+        // Change before each meeting – saved with every answer
+        const MEETING = 'מפגש 1 · פתיחה (20.10)';
+
+        document.getElementById('meetingTag').textContent = MEETING;
+
+        const form = document.getElementById('reflectionForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const submitError = document.getElementById('submitError');
+        const FIELDS = ['fullName', 'takeaway', 'wish', 'contribute', 'knowledge', 'curious'];
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            submitError.style.display = 'none';
+
+            if (!document.getElementById('fullName').value.trim()) {
+                submitError.textContent = 'נא למלא שם מלא.';
+                submitError.style.display = 'block';
+                document.getElementById('fullName').focus();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.textContent = 'שולח...';
+            btnSpinner.style.display = 'block';
+
+            const formData = { form: 'reflection', meeting: MEETING };
+            FIELDS.forEach(function (id) { formData[id] = document.getElementById(id).value.trim(); });
+
+            try {
+                if (GOOGLE_SHEETS_SCRIPT_URL) {
+                    await fetch(GOOGLE_SHEETS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                } else {
+                    // Test mode without URL
+                    console.log(formData);
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                }
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('successCard').style.display = 'block';
+                form.reset();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (error) {
+                console.error('Submission error:', error);
+                submitError.textContent = 'אירעה שגיאה בעת השליחה. אנא נסו שוב או פנו אלינו ישירות.';
+                submitError.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = 'שליחה';
+                btnSpinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
