@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ציטוט המתמטיקאי 1 | קהילת מורות ומורי מתמטיקה למחוננים</title>
+    <link rel="icon" href="/assets/icon-math.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/icon-math-180.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- game.css ו-engine.js זהים לאלה שב-tair-pnini.github.io/ot-ot. ראו CLAUDE.md -->
+    <link rel="stylesheet" href="game.css">
+    <style>
+        :root {
+            --ink: #2C3531;
+            --muted: #5A6561;
+            --line: #E6E0D6;
+            --paper: #FAF8F5;
+            --soft: #F4EBE1;
+            --accent: #344E41;
+            --current: #E5CDB6;
+            --src: min(34px, calc((100vw - 60px) / 11));
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Rubik', 'Assistant', system-ui, -apple-system, sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar { background-color: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--line); }
+        .nav-container {
+            max-width: 760px; margin: 0 auto; padding: 12px 20px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        }
+        .brand-logo { display: flex; align-items: center; gap: 10px; }
+        .brand-img { height: 40px; width: auto; }
+        .nav-title {
+            display: flex; flex-direction: column; align-items: center;
+            line-height: 1.15; color: var(--accent); text-decoration: none;
+        }
+        .nt-small { font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+        .nt-big { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em; }
+
+        main { width: 100%; max-width: 760px; margin: 0 auto; padding: 24px 20px 40px; flex: 1; }
+        h1 { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin: 0 0 6px; }
+        .how { color: var(--muted); margin: 0 0 10px; }
+        .how:last-of-type { margin-bottom: 16px; }
+
+        .twist { font-weight: 600; margin: 0 0 12px; }
+        .article { display: inline-block; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+        .credit { color: var(--muted); font-size: 0.88rem; line-height: 1.5; margin: 0 0 14px; }
+        .credit a { color: inherit; }
+
+        footer {
+            text-align: center; padding: 18px 20px 26px;
+            border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem;
+        }
+        footer p { margin: 0; }
+        footer a { color: inherit; }
+
+        /* Phone layout */
+        @media (max-width: 640px) {
+            html { font-size: 120%; }
+            .nav-container { flex-direction: column; gap: 6px; padding: 8px 10px; }
+            .brand-logo { width: 100%; justify-content: space-between; gap: 8px; }
+            .brand-img { width: 40%; height: auto; }
+            .brand-img.division { width: 57%; }
+            .nav-title { flex-direction: row; gap: 6px; align-items: baseline; }
+            .nt-small { font-size: 0.8rem; }
+            .nt-big { font-size: 1.2rem; }
+            main { padding: 16px 10px 28px; }
+            .bar { gap: 6px; }
+            .bar .btn { padding: 6px 10px; }
+            .source { gap: 2px; }
+            .source .label { display: none; }
+            .source .gap { width: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand-logo">
+                <img class="brand-img" src="../../assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
+                <img class="brand-img division" src="../../assets/division-a-outline.png" width="1200" height="179" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
+            </div>
+            <a class="nav-title" href="../"><span class="nt-small">קהילת מורות ומורי</span> <span class="nt-big">מתמטיקה למחוננים</span></a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>ציטוט המתמטיקאי 1</h1>
+        <p class="how">מצאו את הציטוט בתבנית הבאה - בקריאה מימין לשמאל. שימו לב כי רק משבצת שחורה מסמנת רווח (מילה יכולה להתחיל בשורה אחת ולהמשיך בבאה).</p>
+        <p class="how">לאחר שתלחצו 'התחלה', מעל כל עמודה יופיעו האותיות שיש לשבץ בה, אך בסדר 'מבולבל'. עליכם להיעזר בכך ולמצוא את הציטוט. מומלץ להתחיל ממילים קצרות ו/או עמודות בהן יש מעט אותיות.</p>
+
+        <div class="bar">
+            <span class="time" id="time">00:00</span>
+            <span class="count">בדיקות: <span id="checks">0</span></span>
+            <button class="btn" id="check" disabled>בדיקה</button>
+            <button class="btn main" id="start">התחלה</button>
+        </div>
+
+        <p class="msg" id="msg" role="status"></p>
+
+        <div id="board" class="waiting">
+            <div class="tops" id="tops"></div>
+            <div class="grid" id="grid"></div>
+        </div>
+
+        <div class="source" id="source"></div>
+        <div class="phone-del">
+            <button class="btn" id="erase" disabled>מחיקה</button>
+            <button class="btn" id="zero" disabled>איפוס זמן ובדיקות</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>קהילת מורות ומורי מתמטיקה למחוננים | תשפ"ז | בהובלת תאיר פניני ולירון מיכאלי</p>
+        <p>הפורמט בהשראת <a href="https://gisnep.com" rel="noopener">gisnep.com</a></p>
+    </footer>
+
+    <dialog id="done">
+        <h2>כל הכבוד!</h2>
+        <blockquote id="doneQuote"></blockquote>
+        <p class="who" id="doneWho"></p>
+        <p class="twist">ומשורר אלמוני ענה: "לעומת זאת, שירה היא האמנות של לקרוא בשמות שונים לאותו הדבר."</p>
+        <a class="article" href="https://www.nieuwarchief.nl/serie5/pdf/naw5-2012-13-3-154.pdf" target="_blank" rel="noopener">למאמר "ראיון עם הנרי פואנקרה" (PDF)</a>
+        <p class="credit">את החלק הראשון כתב הנרי פואנקרה ב-1908, במאמר "עתיד המתמטיקה" (<bdi dir="ltr">L'avenir des mathématiques</bdi>). את החלק על השירה הוסיף קסיוס ג'קסון קייזר ב-1935, מתוך שיחה עם משורר שאת שמו לא ציין. <a href="https://quote--of-the--week.blogspot.com/2025/04/mathematics-is-art-of-giving-same-name.html" target="_blank" rel="noopener">לסיפור המלא</a></p>
+        <p class="stats" id="doneStats"></p>
+        <div class="acts">
+            <button class="btn main" id="share">העתקה לשיתוף</button>
+            <button class="btn" id="closeDone">סגירה</button>
+        </div>
+    </dialog>
+
+    <script>
+        const PUZZLE = {
+            quote: 'מתמטיקה היא האמנות של לקרוא באותו השם לדברים שונים.',
+            source: 'הנרי פואנקרה',
+            shareName: 'ציטוט המתמטיקאי של קמ"ל מתמטיקה',
+            cols: 13,
+            seed: 1908,
+        };
+    </script>
+    <script src="engine.js"></script>
+</body>
+</html>
