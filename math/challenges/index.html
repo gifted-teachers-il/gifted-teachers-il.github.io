@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>לוח האתגרים | קהילת מורות ומורי מתמטיקה למחוננים</title>
+    <link rel="icon" href="/assets/icon-math.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/icon-math-180.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAF8F5;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3531;
+            --text-secondary: #5A6561;
+            --primary: #344E41;
+            --primary-hover: #263A30;
+            --accent-light: #F4EBE1;
+            --border-color: #E6E0D6;
+            --chip: #EFEDE8;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --shadow-subtle: 0 4px 20px -2px rgba(44, 53, 49, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        [hidden] { display: none !important; }
+
+        body {
+            font-family: 'Rubik', 'Assistant', system-ui, -apple-system, sans-serif;
+            background-color: #DFE8DA;
+            background-image: radial-gradient(rgba(52, 78, 65, 0.13) 1px, transparent 1.3px);
+            background-size: 18px 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar { background-color: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--border-color); }
+        .nav-container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .brand-logo { display: flex; align-items: center; gap: 10px; }
+        .brand-img { height: 40px; width: auto; }
+        .nav-title { display: flex; flex-direction: column; align-items: center; line-height: 1.15; color: var(--primary); text-decoration: none; }
+        .nt-small { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+        .nt-big { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em; }
+
+        .main-container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 28px 20px 84px; }
+
+        .panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .gate { max-width: 480px; margin: 24px auto; }
+        h1 { font-size: 1.7rem; color: var(--primary); line-height: 1.25; margin-bottom: 8px; }
+        .gate p { color: var(--text-secondary); margin-bottom: 20px; }
+
+        label { display: block; font-weight: 600; margin-bottom: 4px; }
+        .helper { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.45; }
+        .field { margin-bottom: 18px; }
+        input[type="text"], textarea {
+            width: 100%;
+            font: inherit;
+            font-size: 1rem;
+            padding: 11px 13px;
+            color: var(--text-primary);
+            background-color: #FCFBF9;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            outline: none;
+        }
+        input[type="text"]:focus, textarea:focus {
+            background-color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 78, 65, 0.12);
+        }
+        textarea { resize: vertical; display: block; }
+
+        button { font: inherit; cursor: pointer; }
+        button:disabled { cursor: default; opacity: 0.6; }
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 11px 24px;
+            font-weight: 600;
+        }
+        .btn:hover:not(:disabled) { background: var(--primary-hover); }
+        .btn.wide { width: 100%; }
+        .btn.small { padding: 6px 16px; font-size: 0.92rem; border-radius: var(--radius-sm); }
+        .link {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            text-decoration: underline;
+            font-size: 0.86rem;
+            padding: 2px 4px;
+        }
+        .link:hover { color: var(--primary); }
+        .error {
+            background: #FEECEB;
+            color: #C62828;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 14px;
+            font-size: 0.92rem;
+            border: 1px solid #F6CBCA;
+        }
+
+        .intro { display: flex; gap: 28px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+        .intro-text { flex: 1 1 420px; }
+        .intro-text p { font-size: 1.05rem; }
+        .intro-side { text-align: center; }
+        .me { font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px; }
+        .me b { color: var(--text-primary); font-weight: 600; }
+
+        .composer { margin-top: 22px; padding-top: 20px; border-top: 1px dashed var(--border-color); }
+        .composer textarea { min-height: 150px; }
+        .composer-foot { display: flex; gap: 10px; align-items: center; }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip {
+            background: var(--chip);
+            border: 1.5px solid transparent;
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 3px 12px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+        .chip:hover { border-color: #CFCABF; }
+        .chip.on { background: #fff; border-color: var(--primary); color: var(--primary); font-weight: 600; }
+        .chip .n { color: var(--text-secondary); font-weight: 400; margin-right: 3px; }
+        .custom-tag { display: flex; gap: 8px; margin-top: 10px; max-width: 360px; }
+        .custom-tag input { padding: 6px 10px; font-size: 0.92rem; }
+        .btn-quiet {
+            background: var(--chip);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 6px 14px;
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
+        .btn-quiet:hover:not(:disabled) { background: #E4E1DA; }
+
+        .filter { margin: 24px 0 16px; display: flex; gap: 10px; align-items: baseline; }
+        .filter-label { font-size: 0.9rem; color: var(--text-primary); white-space: nowrap; }
+        .filter .chip { background: rgba(255, 255, 255, 0.75); }
+        .filter .chip.on { background: #fff; }
+
+        .board { display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; }
+        .board-col { flex: 1 1 0; min-width: 0; }
+        .card {
+            background: var(--tint, #fff);
+            border-radius: 16px;
+            padding: 14px 15px 11px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 2px rgba(44, 53, 49, 0.08), 0 8px 20px -8px rgba(44, 53, 49, 0.22);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(44, 53, 49, 0.08), 0 12px 26px -8px rgba(44, 53, 49, 0.28); }
+        .card-head { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+        .avatar {
+            flex: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--ink, var(--primary));
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .card-who { min-width: 0; line-height: 1.25; }
+        .card-name { display: block; font-weight: 600; overflow-wrap: anywhere; }
+        .card-time { display: block; font-size: 0.76rem; color: var(--text-secondary); }
+        .card-story { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.96rem; }
+        .card .chips { margin-top: 10px; }
+        .card .chip { cursor: pointer; background: rgba(255, 255, 255, 0.7); font-size: 0.8rem; padding: 2px 10px; }
+        .card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 6px; margin-top: 12px; }
+        .same {
+            background: #fff;
+            border: 1.5px solid rgba(52, 78, 65, 0.25);
+            border-radius: 999px;
+            padding: 4px 13px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+        .same:hover { border-color: var(--primary); }
+        .same.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .same .n { font-weight: 400; margin-right: 6px; }
+        .emojis { display: flex; flex-wrap: wrap; gap: 1px; }
+        .emoji {
+            background: transparent;
+            border: 1.5px solid transparent;
+            border-radius: 999px;
+            padding: 1px 5px;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .emoji .ic { opacity: 0.6; }
+        .emoji.has .ic, .emoji:hover .ic { filter: none; opacity: 1; }
+        .emoji.on { background: #fff; border-color: rgba(52, 78, 65, 0.45); }
+        .emoji .n { font-size: 0.8rem; color: var(--text-secondary); }
+        .card-links { display: flex; flex-wrap: wrap; gap: 0 8px; margin-top: 4px; }
+        .card-links .link { font-size: 0.8rem; }
+
+        .form-slot:not(:empty) { margin-top: 10px; }
+        .mini-form textarea { min-height: 54px; font-size: 0.93rem; padding: 8px 10px; background: rgba(255, 255, 255, 0.85); }
+        .mini-form input[type="text"] { font-size: 0.93rem; padding: 7px 10px; }
+        .mini-actions { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+
+        .reactions { margin-top: 9px; padding-top: 7px; border-top: 1px solid rgba(52, 78, 65, 0.14); font-size: 0.89rem; }
+        .reaction { margin-bottom: 4px; overflow-wrap: anywhere; white-space: pre-wrap; }
+        .reaction b { font-weight: 600; }
+        .also { color: var(--text-secondary); overflow-wrap: anywhere; }
+        .who { margin-top: 3px; font-size: 0.8rem; color: var(--text-secondary); }
+        .who summary { cursor: pointer; text-decoration: underline; padding: 2px 4px; }
+        .who div { padding: 2px 4px; overflow-wrap: anywhere; }
+
+        .empty { text-align: center; color: var(--text-primary); padding: 40px 10px; }
+        .status { text-align: center; font-size: 0.86rem; color: var(--text-primary); margin-top: 12px; }
+
+        .fab {
+            position: fixed;
+            left: 22px;
+            bottom: 22px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-size: 2rem;
+            line-height: 1;
+            box-shadow: 0 6px 18px rgba(44, 53, 49, 0.35);
+            z-index: 5;
+        }
+        .fab:hover { background: var(--primary-hover); }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 50%;
+            transform: translateX(50%);
+            background: var(--text-primary);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            max-width: calc(100vw - 32px);
+            z-index: 10;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: auto;
+        }
+
+        /* Phone layout */
+        @media (max-width: 640px) {
+            html { font-size: 120%; }
+            .nav-container { flex-direction: column; gap: 6px; padding: 8px 10px; }
+            .brand-logo { width: 100%; justify-content: space-between; gap: 8px; }
+            .brand-img { width: 40%; height: auto; }
+            .brand-img.division { width: 57%; }
+            .nav-title { flex-direction: row; gap: 6px; align-items: baseline; }
+            .nt-small { font-size: 0.8rem; }
+            .nt-big { font-size: 1.2rem; }
+            .main-container { padding: 16px 10px 40px; }
+            .panel { padding: 20px 16px; }
+            h1 { font-size: 1.4rem; }
+            .intro-side { width: 100%; }
+            .intro-side .btn { width: 100%; }
+            .filter { flex-direction: column; gap: 4px; }
+            .fab { left: 14px; bottom: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand-logo">
+                <img class="brand-img" src="../../assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
+                <img class="brand-img division" src="../../assets/division-a-outline.png" width="1200" height="179" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
+            </div>
+            <a class="nav-title" href="../"><span class="nt-small">קהילת מורות ומורי</span> <span class="nt-big">מתמטיקה למחוננים</span></a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+
+        <form class="panel gate" id="gate" novalidate hidden>
+            <h1>לוח האתגרים</h1>
+            <p id="gateIntro">המקום שלנו לשתף באירועים מאתגרים מהכיתה.</p>
+            <div class="field" id="codeField">
+                <label for="codeInput">מילת הקוד</label>
+                <input type="text" id="codeInput" autocomplete="off">
+            </div>
+            <div class="field">
+                <label for="nameInput">השם שלי</label>
+                <div class="helper">השם יופיע ליד כל מה שתכתבו בלוח. נשמח לשם שלכם, ואפשר גם שם בדוי.</div>
+                <input type="text" id="nameInput" maxlength="40" autocomplete="name">
+            </div>
+            <div class="error" id="gateError" hidden></div>
+            <button class="btn wide" id="gateBtn" type="submit">כניסה ללוח</button>
+        </form>
+
+        <div id="app" hidden>
+            <section class="panel">
+                <div class="intro">
+                    <div class="intro-text">
+                        <h1>לוח האתגרים</h1>
+                        <p>תארו אירוע מאתגר ספציפי שקרה לכם בכתה וקשור למאפייני הילד המחונן. בחרו אירוע שמעניין אתכם לדבר ולחשוב עליו ביחד. רצוי להשתמש בשמות בדויים לתלמידים.</p>
+                    </div>
+                    <div class="intro-side">
+                        <button class="btn" id="openComposer" type="button" aria-controls="composer">העלו את הסיפור</button>
+                        <div class="me">השם שלי בלוח: <b id="meName"></b> <button class="link" id="changeName" type="button">שינוי</button></div>
+                    </div>
+                </div>
+
+                <form class="composer" id="composer" novalidate hidden>
+                    <div class="field">
+                        <label for="storyInput">הסיפור שלי</label>
+                        <textarea id="storyInput" maxlength="4000"></textarea>
+                    </div>
+                    <div class="field" data-tags>
+                        <label>על מה הסיפור? <span style="font-weight:400;color:var(--text-secondary)">(לא חובה)</span></label>
+                        <div class="helper">אפשר לסמן כמה מאפיינים או להוסיף תיוג משלכם.</div>
+                        <div class="chips" id="composerTags"></div>
+                        <div class="custom-tag">
+                            <input type="text" id="customTag" list="tagList" maxlength="30" placeholder="תיוג משלי" aria-label="תיוג משלי">
+                            <button class="btn-quiet" id="addCustomTag" type="button">הוספה</button>
+                        </div>
+                    </div>
+                    <div class="error" id="composerError" hidden></div>
+                    <div class="composer-foot">
+                        <button class="btn" id="publish" type="submit">העלאה ללוח</button>
+                    </div>
+                </form>
+            </section>
+
+            <div class="filter" id="filterRow" data-tags hidden>
+                <span class="filter-label">הצגה לפי תיוג:</span>
+                <div class="chips" id="filterChips"></div>
+            </div>
+
+            <div class="board" id="board"></div>
+            <div class="empty" id="empty" hidden></div>
+            <div class="status" id="status" hidden></div>
+            <button class="fab" id="fab" type="button" aria-label="העלו את הסיפור" title="העלו את הסיפור" hidden>+</button>
+        </div>
+    </div>
+
+    <datalist id="tagList"></datalist>
+    <div class="toast" id="toast" role="status" hidden></div>
+
+    <footer>
+        <p>קהילת מורות ומורי מתמטיקה למחוננים | תשפ"ז | בהובלת תאיר פניני ולירון מיכאלי</p>
+    </footer>
+
+    <script>
+        // Apps Script web app of the "לוח האתגרים" sheet (_source/math/apps-script-math-challenges.gs)
+        const DEPLOYED_API = 'https://script.google.com/macros/s/AKfycbyS20GsOgEa4RmLN70IJMo9CbRrYAgXEQhhKJD_lJtLeKubasJCF-kgY3kS53q1Mqz_/exec';
+        // false = hides tagging everywhere (the choice to post, the filter and the tags on cards)
+        const TAGS_ENABLED = true;
+        const TAG_PRESETS = [
+            'קשיים חברתיים ושייכות', 'מוטיבציה ותת-הישגיות', 'ויסות עצמי', 'התווית "מחונן" וסטיגמה', 'ציפיות ולחץ',
+            'פרפקציוניזם', 'חרדה ממתמטיקה', 'שעמום וחוסר אתגר', 'כפולי ייחוד', 'מדלג על הנמקה'
+        ];
+        const MAX_TAGS = 6;
+        const POLL_MS = 20000;
+        // Change freely: the Apps Script doesn't keep this list ([emoji, label for screen readers])
+        const EMOJIS = [['❤️', 'לב'], ['🤗', 'חיבוק'], ['😊', 'חיוך'], ['💪', 'להישאר חזקים']];
+        const TINTS = [['#FFF8EC', '#B4813A'], ['#EFF6EA', '#55805A'], ['#FDEFE8', '#C86B4B'], ['#EAF3F7', '#4A7F9B'], ['#F5EFF7', '#8366A0']];
+
+        const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        const API = (isLocal && new URLSearchParams(location.search).get('api')) || DEPLOYED_API;
+
+        const $ = id => document.getElementById(id);
+        const store = {
+            get(k) { try { return localStorage.getItem('challenges.' + k) || ''; } catch (e) { return ''; } },
+            set(k, v) { try { localStorage.setItem('challenges.' + k, v); } catch (e) { /* page works without it */ } }
+        };
+
+        function clientId() {
+            let id = store.get('client');
+            if (!id) {
+                const bytes = crypto.getRandomValues(new Uint8Array(16));
+                id = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+                store.set('client', id);
+            }
+            return id;
+        }
+
+        const state = {
+            code: store.get('code'), name: store.get('name'), client: clientId(),
+            stories: [], sig: '', filter: null,
+            openForm: null, pending: false,
+            picked: new Set(), writes: 0, fails: 0, composerDecided: false,
+            busy: new Set(), inflight: 0, cols: 0, whoOpen: new Set()
+        };
+
+        function el(tag, props, ...kids) {
+            const n = document.createElement(tag);
+            Object.entries(props || {}).forEach(([k, v]) => {
+                if (k === 'class') n.className = v;
+                else if (k === 'text') n.textContent = v;
+                else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+                else n.setAttribute(k, v);
+            });
+            kids.flat().forEach(c => c && n.append(c));
+            return n;
+        }
+
+        async function call(action, payload) {
+            const res = await fetch(API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(Object.assign({ action, code: state.code, client: state.client }, payload))
+            });
+            return res.json();
+        }
+
+        let toastTimer;
+        function toast(msg) {
+            $('toast').textContent = msg;
+            $('toast').hidden = false;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { $('toast').hidden = true; }, 4000);
+        }
+
+        // Every write answers with the fresh board. Returns true when it was saved.
+        async function send(action, payload, btn) {
+            if (btn) btn.disabled = true;
+            state.writes++;
+            try {
+                const res = await call(action, payload);
+                if (res.result === 'badcode') { showGate(); return false; }
+                if (res.result !== 'ok') { toast(res.error === 'gone' ? 'הסיפור הזה כבר לא בלוח.' : 'לא הצלחנו לשמור. נסו שוב.'); return false; }
+                closeForm();
+                applyData(res, true);
+                return true;
+            } catch (e) {
+                toast('אין חיבור כרגע, ומה שכתבתם לא נשמר. נסו שוב.');
+                return false;
+            } finally {
+                state.writes++;
+                if (btn) btn.disabled = false;
+            }
+        }
+
+
+        // One-click actions: the screen has already changed, this saves it in the background.
+        async function quick(action, payload, key) {
+            state.busy.add(key);
+            state.writes++;
+            state.inflight++;
+            let res = null;
+            try { res = await call(action, payload); } catch (e) { /* handled below */ }
+            state.inflight--;
+            state.writes++;
+            state.busy.delete(key);
+            if (res && res.result === 'badcode') return showGate();
+            if (res && res.result === 'ok') {
+                if (!state.inflight) applyData(res, false);
+                return;
+            }
+            toast('לא הצלחנו לשמור. נסו שוב.');
+            if (!state.inflight) { state.sig = ''; poll(); }
+        }
+
+
+        // ===== Entering =====
+        function showGate(nameOnly) {
+            $('app').hidden = true;
+            $('gate').hidden = false;
+            $('codeField').hidden = !!nameOnly;
+            $('gateIntro').hidden = !!nameOnly;
+            $('gateError').hidden = true;
+            $('nameInput').value = state.name;
+            $('gateBtn').textContent = nameOnly ? 'שמירה' : 'כניסה ללוח';
+            if (nameOnly) $('nameInput').focus();
+        }
+
+        function enterApp() {
+            $('gate').hidden = true;
+            $('app').hidden = false;
+            $('meName').textContent = state.name;
+        }
+
+        $('gate').addEventListener('submit', async ev => {
+            ev.preventDefault();
+            const name = $('nameInput').value.trim();
+            const err = msg => { $('gateError').textContent = msg; $('gateError').hidden = false; };
+            if (!name) return err('צריך לכתוב שם. אפשר גם שם בדוי.');
+            state.name = name;
+            store.set('name', name);
+            if ($('codeField').hidden) { enterApp(); return; }
+
+            const code = $('codeInput').value.trim();
+            if (!code) return err('צריך לכתוב את מילת הקוד.');
+            $('gateBtn').disabled = true;
+            state.code = code;
+            try {
+                const res = await call('list', {});
+                if (res.result === 'badcode') return err('מילת הקוד לא נכונה. נסו שוב.');
+                if (res.result !== 'ok') return err('משהו השתבש. נסו שוב בעוד רגע.');
+                store.set('code', code);
+                enterApp();
+                applyData(res, true);
+                schedule();
+            } catch (e) {
+                err('אין חיבור כרגע. נסו שוב בעוד רגע.');
+            } finally {
+                $('gateBtn').disabled = false;
+            }
+        });
+
+        $('changeName').addEventListener('click', () => showGate(true));
+
+
+        // ===== Composer =====
+        function knownTags() {
+            const counts = tagCounts();
+            return TAG_PRESETS.concat([...counts.keys()].filter(t => !TAG_PRESETS.includes(t)));
+        }
+
+        function tagCounts() {
+            const m = new Map();
+            state.stories.forEach(s => s.tags.forEach(t => m.set(t, (m.get(t) || 0) + 1)));
+            return m;
+        }
+
+        function renderComposerTags() {
+            $('composerTags').replaceChildren(...knownTags().concat([...state.picked].filter(t => !knownTags().includes(t))).map(t =>
+                el('button', {
+                    type: 'button', class: 'chip' + (state.picked.has(t) ? ' on' : ''), text: t,
+                    'aria-pressed': String(state.picked.has(t)), onclick: () => togglePick(t)
+                })
+            ));
+            $('tagList').replaceChildren(...knownTags().map(t => el('option', { value: t })));
+        }
+
+        function togglePick(t) {
+            if (state.picked.has(t)) state.picked.delete(t);
+            else if (state.picked.size < MAX_TAGS) state.picked.add(t);
+            else toast('אפשר עד ' + MAX_TAGS + ' תיוגים לסיפור.');
+            renderComposerTags();
+        }
+
+        function cleanTag(s) { return s.replace(/[,|]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 30); }
+
+        function addCustom() {
+            const t = cleanTag($('customTag').value);
+            if (!t) return;
+            if (!state.picked.has(t)) togglePick(t);
+            $('customTag').value = '';
+            $('customTag').focus();
+        }
+        $('addCustomTag').addEventListener('click', addCustom);
+        $('customTag').addEventListener('keydown', ev => {
+            if (ev.key === 'Enter') { ev.preventDefault(); addCustom(); }
+        });
+
+        function setComposer(open) {
+            $('composer').hidden = !open;
+            $('openComposer').textContent = open ? 'צמצום' : 'העלו את הסיפור';
+            $('openComposer').className = open ? 'btn-quiet' : 'btn';
+            $('openComposer').setAttribute('aria-expanded', String(open));
+            $('fab').hidden = open;
+            if (open) renderComposerTags();
+        }
+        $('openComposer').addEventListener('click', () => {
+            const open = $('composer').hidden;
+            setComposer(open);
+            if (open) $('storyInput').focus();
+        });
+        $('fab').addEventListener('click', () => {
+            setComposer(true);
+            $('composer').scrollIntoView({ block: 'center' });
+            $('storyInput').focus({ preventScroll: true });
+        });
+
+        $('storyInput').value = store.get('draft');
+        $('storyInput').addEventListener('input', () => store.set('draft', $('storyInput').value));
+
+        $('composer').addEventListener('submit', async ev => {
+            ev.preventDefault();
+            const story = $('storyInput').value.trim();
+            $('composerError').hidden = !!story;
+            if (!story) { $('composerError').textContent = 'עוד לא כתבתם סיפור.'; return; }
+            if ($('customTag').value.trim()) addCustom();
+            const saved = await send('addStory', { name: state.name, story, tags: [...state.picked] }, $('publish'));
+            if (saved) {
+                $('storyInput').value = '';
+                store.set('draft', '');
+                state.picked.clear();
+                setComposer(false);
+                toast('הסיפור עלה ללוח. תודה!');
+            }
+        });
+
+
+        // ===== Board =====
+        function applyData(res, force) {
+            res.stories.forEach(s => { s.emojis = s.emojis || []; });
+            state.stories = res.stories;
+            state.fails = 0;
+            $('status').hidden = true;
+            const sig = JSON.stringify(res.stories);
+            if (!state.composerDecided) {
+                state.composerDecided = true;
+                setComposer(!res.stories.some(s => s.mine));
+            }
+            if (!force && sig === state.sig && !state.pending) return;
+            state.sig = sig;
+            if (!force && state.openForm && state.openForm.contains(document.activeElement)) {   // don't disturb someone typing
+                state.pending = true;
+                return;
+            }
+            state.pending = false;
+            renderBoard();
+        }
+
+        function columnCount() {
+            if (innerWidth <= 640) return 1;
+            return Math.max(1, Math.min(4, Math.floor(($('board').clientWidth + 14) / 254)));
+        }
+
+        addEventListener('resize', () => {
+            if (!$('app').hidden && columnCount() !== state.cols) renderBoard();
+        });
+
+        function formatTime(ms) {
+            const d = new Date(ms), now = new Date();
+            const hm = d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+            if (d.toDateString() === now.toDateString()) return 'היום ' + hm;
+            return d.getDate() + '.' + (d.getMonth() + 1) + ', ' + hm;
+        }
+
+        function renderBoard() {
+            const counts = tagCounts();
+            if (state.filter && !counts.has(state.filter)) state.filter = null;
+
+            $('filterRow').hidden = !TAGS_ENABLED || counts.size === 0;
+            if (TAGS_ENABLED) {
+                const order = [...counts.keys()].sort((a, b) => counts.get(b) - counts.get(a));
+                $('filterChips').replaceChildren(
+                    filterChip('הכול', state.stories.length, null),
+                    ...order.map(t => filterChip(t, counts.get(t), t))
+                );
+                if (!$('composer').hidden) renderComposerTags();
+                else $('tagList').replaceChildren(...knownTags().map(t => el('option', { value: t })));
+            }
+
+            const shown = state.stories.filter(s => !state.filter || s.tags.includes(state.filter));
+            // Placed from the oldest, so a new story or reaction doesn't make other cards jump between columns
+            state.cols = columnCount();
+            const cols = Array.from({ length: state.cols }, () => el('div', { class: 'board-col' }));
+            shown.slice().reverse().forEach((s, i) => cols[i % state.cols].prepend(renderCard(s)));
+            $('board').replaceChildren(...cols);
+            $('empty').hidden = shown.length > 0;
+            $('empty').textContent = 'עוד אין כאן סיפורים. אפשר להיות הראשונים.';
+
+            if (state.openForm) {   // an open note stays open, with what was typed, when the board refreshes
+                const slot = $('board').querySelector('[data-slot="' + state.openForm.dataset.story + '"]');
+                if (slot) slot.append(state.openForm); else state.openForm = null;
+            }
+        }
+
+        function renderNow() { state.sig = ''; renderBoard(); }
+        function storyById(id) { return state.stories.find(s => s.id === id); }
+
+        function filterChip(label, n, value) {
+            const on = state.filter === value;
+            return el('button', {
+                type: 'button', class: 'chip' + (on ? ' on' : ''), 'aria-pressed': String(on),
+                onclick: () => { state.filter = value; closeForm(); renderBoard(); }
+            }, label, el('span', { class: 'n', text: '(' + n + ')' }));
+        }
+
+        function renderCard(s) {
+            const mine = s.reactions.find(r => r.mine);
+            const withNote = s.reactions.filter(r => r.note);
+            const noNote = s.reactions.filter(r => !r.note).map(r => r.name);
+            const hash = Array.from(s.id).reduce((a, c) => a + c.charCodeAt(0), 0);
+            const [tint, ink] = TINTS[hash % TINTS.length];
+
+            return el('article', { class: 'card', style: '--tint:' + tint + ';--ink:' + ink },
+                el('div', { class: 'card-head' },
+                    el('span', { class: 'avatar', 'aria-hidden': 'true', text: Array.from(s.name.trim())[0] || '' }),
+                    el('div', { class: 'card-who' },
+                        el('span', { class: 'card-name', dir: 'auto', text: s.name }),
+                        el('span', { class: 'card-time', text: formatTime(s.time) })
+                    )
+                ),
+                el('div', { class: 'card-story', dir: 'auto', text: s.story }),
+                TAGS_ENABLED && s.tags.length ? el('div', { class: 'chips' }, s.tags.map(t =>
+                    el('button', { type: 'button', class: 'chip' + (state.filter === t ? ' on' : ''), text: t,
+                        onclick: () => { state.filter = state.filter === t ? null : t; closeForm(); renderBoard(); } })
+                )) : null,
+                el('div', { class: 'card-actions' },
+                    el('button', {
+                        type: 'button', class: 'same' + (mine ? ' on' : ''), 'aria-pressed': String(!!mine),
+                        onclick: () => clickSame(s.id)
+                    }, 'גם לי קרה!', s.reactions.length ? el('span', { class: 'n', text: String(s.reactions.length) }) : null),
+                    el('div', { class: 'emojis' }, EMOJIS.map(([e, label]) => {
+                        const list = s.emojis.filter(r => r.emoji === e);
+                        const on = list.some(r => r.mine);
+                        return el('button', {
+                            type: 'button', class: 'emoji' + (list.length ? ' has' : '') + (on ? ' on' : ''),
+                            'aria-pressed': String(on), 'aria-label': label,
+                            title: list.length ? list.map(r => r.name).join(', ') : label,
+                            onclick: () => clickEmoji(s.id, e)
+                        }, el('span', { class: 'ic', text: e }), list.length ? el('span', { class: 'n', text: String(list.length) }) : null);
+                    }))
+                ),
+                el('div', { class: 'card-links' },
+                    mine ? el('button', { type: 'button', class: 'link', text: mine.note ? 'עריכת התייחסות' : 'הוספת התייחסות', onclick: () => openNote(s.id) }) : null,
+                    TAGS_ENABLED ? el('button', { type: 'button', class: 'link', text: 'הוספת תיוג', onclick: () => openTag(s) }) : null,
+                    s.mine ? el('button', { type: 'button', class: 'link', text: 'מחיקה', onclick: ev => removeStory(s, ev.currentTarget) }) : null
+                ),
+                el('div', { class: 'form-slot', 'data-slot': s.id }),
+                s.reactions.length ? el('div', { class: 'reactions' },
+                    withNote.map(r => el('div', { class: 'reaction', dir: 'auto' }, el('b', { text: r.name + ': ' }), r.note)),
+                    noNote.length ? el('div', { class: 'also', dir: 'auto', text: 'גם לי קרה: ' + noNote.join(', ') }) : null
+                ) : null,
+                s.emojis.length ? whoReacted(s) : null
+            );
+        }
+
+        function whoReacted(s) {
+            const box = el('details', { class: 'who', ontoggle: () => {
+                if (box.open) state.whoOpen.add(s.id); else state.whoOpen.delete(s.id);
+            } }, el('summary', { text: 'מי הגיב' }),
+                EMOJIS.map(([e]) => {
+                    const names = s.emojis.filter(r => r.emoji === e).map(r => r.name);
+                    return names.length ? el('div', { dir: 'auto', text: e + ' ' + names.join(', ') }) : null;
+                })
+            );
+            box.open = state.whoOpen.has(s.id);
+            return box;
+        }
+
+        function clickSame(id) {
+            const key = 'react:' + id, s = storyById(id);
+            if (!s || state.busy.has(key)) return;
+            const mine = s.reactions.find(r => r.mine);
+            if (mine) {
+                if (mine.note && !confirm('להסיר את הסימון? גם ההתייחסות שכתבתם תימחק.')) return;
+                s.reactions = s.reactions.filter(r => !r.mine);
+                if (state.openForm && state.openForm.dataset.story === id) closeForm();
+                renderNow();
+                quick('unreact', { storyId: id }, key);
+            } else {
+                s.reactions.push({ name: state.name, note: '', mine: true });
+                renderNow();
+                openNote(id);
+                quick('react', { storyId: id, name: state.name }, key);
+            }
+        }
+
+        function clickEmoji(id, emoji) {
+            const key = 'emoji:' + id + emoji, s = storyById(id);
+            if (!s || state.busy.has(key)) return;
+            if (s.emojis.some(r => r.emoji === emoji && r.mine)) {
+                s.emojis = s.emojis.filter(r => !(r.emoji === emoji && r.mine));
+            } else {
+                s.emojis.push({ emoji, name: state.name, mine: true });
+            }
+            renderNow();
+            quick('emoji', { storyId: id, emoji, name: state.name }, key);
+        }
+
+        function closeForm() {
+            if (state.openForm) state.openForm.remove();
+            state.openForm = null;
+            if (state.pending) { state.pending = false; renderBoard(); }
+        }
+
+        function mount(id, form) {
+            closeForm();
+            // looked up after closeForm, which may have rebuilt the board
+            const slot = $('board').querySelector('[data-slot="' + id + '"]');
+            if (!slot) return false;
+            form.dataset.story = id;
+            slot.append(form);
+            state.openForm = form;
+            return true;
+        }
+
+        function openNote(id) {
+            const mine = storyById(id).reactions.find(r => r.mine);
+            const note = el('textarea', { maxlength: '300', placeholder: 'רוצים להוסיף התייחסות קצרה? (לא חובה)', 'aria-label': 'התייחסות קצרה' });
+            note.value = mine ? mine.note : '';
+            const save = el('button', { type: 'submit', class: 'btn small', text: 'שליחה' });
+            const form = el('form', {
+                class: 'mini-form', novalidate: '',
+                onsubmit: ev => { ev.preventDefault(); send('react', { storyId: id, name: state.name, note: note.value }, save); }
+            }, note, el('div', { class: 'mini-actions' }, save,
+                el('button', { type: 'button', class: 'link', text: 'לא עכשיו', onclick: closeForm })
+            ));
+            mount(id, form);
+        }
+
+        function openTag(s) {
+            const input = el('input', { type: 'text', list: 'tagList', maxlength: '30', placeholder: 'איזה תיוג להוסיף?', 'aria-label': 'תיוג להוספה' });
+            const save = el('button', { type: 'submit', class: 'btn small', text: 'הוספה' });
+            const form = el('form', {
+                class: 'mini-form', novalidate: '',
+                onsubmit: ev => {
+                    ev.preventDefault();
+                    const tag = cleanTag(input.value);
+                    if (tag) send('addTag', { id: s.id, tag }, save);
+                }
+            }, input, el('div', { class: 'mini-actions' }, save, el('button', { type: 'button', class: 'link', text: 'ביטול', onclick: closeForm })));
+            if (mount(s.id, form)) input.focus();
+        }
+
+        function removeStory(s, btn) {
+            if (confirm('למחוק את הסיפור מהלוח? אי אפשר לשחזר אותו.')) send('deleteStory', { id: s.id }, btn);
+        }
+
+
+        // ===== Staying in sync =====
+        let timer;
+        function schedule() {
+            clearTimeout(timer);
+            timer = setTimeout(poll, POLL_MS + Math.random() * 4000);
+        }
+
+        async function poll() {
+            if (document.hidden || $('app').hidden) return schedule();
+            const seen = state.writes;
+            try {
+                const res = await call('list', {});
+                if (res.result === 'badcode') return showGate();
+                if (res.result === 'ok' && seen === state.writes) applyData(res, false);
+            } catch (e) {
+                if (++state.fails >= 2) {
+                    $('status').textContent = 'אין חיבור כרגע. הלוח יתעדכן כשהחיבור יחזור.';
+                    $('status').hidden = false;
+                }
+            }
+            schedule();
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !$('app').hidden) poll();
+        });
+
+        document.querySelectorAll('[data-tags]').forEach(n => { if (!TAGS_ENABLED) n.remove(); });
+
+
+        // ===== Start =====
+        (async function start() {
+            if (!state.code || !state.name) return showGate();
+            try {
+                const res = await call('list', {});
+                if (res.result !== 'ok') return showGate();
+                enterApp();
+                applyData(res, true);
+                schedule();
+            } catch (e) {
+                showGate();
+                $('gateError').textContent = 'אין חיבור כרגע. נסו שוב בעוד רגע.';
+                $('gateError').hidden = false;
+            }
+        })();
+    </script>
+</body>
+</html>
