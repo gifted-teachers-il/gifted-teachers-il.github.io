@@ -326,7 +326,7 @@
             </div>
             <div class="field">
                 <label for="nameInput">השם שלי</label>
-                <div class="helper">השם יופיע ליד כל מה שתכתבו בלוח. נשמח לשם שלכם, ואפשר גם שם בדוי.</div>
+                <div class="helper">השם יופיע ליד כל מה שתכתבו בלוח. נשמח לשם שלכם, ואפשר גם כינוי.</div>
                 <input type="text" id="nameInput" maxlength="40" autocomplete="name">
             </div>
             <div class="error" id="gateError" hidden></div>
@@ -393,7 +393,7 @@
         const TAGS_ENABLED = true;
         const TAG_PRESETS = [
             'קשיים חברתיים ושייכות', 'מוטיבציה ותת-הישגיות', 'ויסות עצמי', 'התווית "מחונן" וסטיגמה', 'ציפיות ולחץ',
-            'פרפקציוניזם', 'חרדה ממתמטיקה', 'שעמום וחוסר אתגר', 'כפולי ייחוד', 'מדלג על הנמקה'
+            'פרפקציוניזם', 'חרדה ממתמטיקה', 'שעמום וחוסר אתגר'
         ];
         const MAX_TAGS = 6;
         const POLL_MS = 20000;
@@ -520,7 +520,7 @@
             ev.preventDefault();
             const name = $('nameInput').value.trim();
             const err = msg => { $('gateError').textContent = msg; $('gateError').hidden = false; };
-            if (!name) return err('צריך לכתוב שם. אפשר גם שם בדוי.');
+            if (!name) return err('צריך לכתוב שם. אפשר גם כינוי.');
             state.name = name;
             store.set('name', name);
             if ($('codeField').hidden) { enterApp(); return; }
