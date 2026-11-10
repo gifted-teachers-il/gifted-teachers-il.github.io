@@ -132,6 +132,9 @@
             box-shadow: 0 0 0 3px rgba(52, 78, 65, 0.12);
         }
         textarea { min-height: 96px; resize: vertical; }
+        .choices { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 6px 0 10px; }
+        label.choice { display: flex; align-items: center; gap: 8px; font-weight: 400; margin: 0; cursor: pointer; }
+        .choice input { width: 18px; height: 18px; accent-color: #6B7280; margin: 0; }
         .name-group {
             padding-bottom: 24px;
             border-bottom: 1px dashed var(--border-color);
@@ -247,44 +250,54 @@
         <main class="form-card" id="formContainer">
             <div class="form-header">
                 <span class="meeting-tag" id="meetingTag"></span>
-                <h1>רפלקציה: בונים את הקהילה יחד</h1>
-                <p>כדי שהקהילה תהיה מותאמת בדיוק לצרכים שלכן ושלכם, נשמח שתמלאו את טופס הרפלקציה הקצר.</p>
+                <h1>רפלקציה – אתגרי מחוננים</h1>
+                <p>לא הגעת למפגש היום? נשמח שתמלא/י בכל זאת – אפשר לדלג על השאלה הראשונה.</p>
             </div>
 
             <form id="reflectionForm" novalidate>
                 <div class="field-group name-group">
                     <label for="fullName">שם מלא <span class="required">*</span></label>
-                    <input type="text" id="fullName" name="fullName" autocomplete="name" required>
+                    <input type="text" id="fullName" data-col="שם" autocomplete="name" required>
                 </div>
 
                 <div class="field-group">
-                    <label for="takeaway"><span class="num">1.</span>עם מה אתם יוצאים מהמפגש היום?</label>
-                    <div class="helper-text">בכנות, מה עבד לכם טוב? מה פחות? נשמח לדיוקים והארות</div>
-                    <textarea id="takeaway" name="takeaway"></textarea>
+                    <label for="takeaway"><span class="num">1.</span>עם מה את/ה יוצא/ת מהמפגש היום?</label>
+                    <div class="helper-text">בכנות, מה עבד לך טוב? מה פחות? נשמח לדיוקים והארות</div>
+                    <textarea id="takeaway" data-col="עם מה יוצאים מהמפגש"></textarea>
                 </div>
 
                 <div class="field-group">
-                    <label for="wish"><span class="num">2.</span>מה הייתם רוצים לקבל מהקהילה?</label>
-                    <div class="helper-text">נסו להיות כמה שיותר ספציפיים: נושא מתמטי מסוים, דילמה מהכיתה, סוג של משימה או כלי שהייתם רוצים לפגוש.</div>
-                    <textarea id="wish" name="wish"></textarea>
+                    <label for="booklet"><span class="num">2.</span>איך היית רוצה שתיראה חוברת האתגרים וההתמודדויות?</label>
+                    <div class="helper-text">ידע, מחקר, דוגמאות מהכיתה...</div>
+                    <textarea id="booklet" data-col="איך תיראה חוברת האתגרים"></textarea>
                 </div>
 
                 <div class="field-group">
-                    <label for="contribute"><span class="num">3.</span>מה תוכלו לתרום?</label>
-                    <div class="helper-text">מערך שיעור שעבד מצוין, חידה יפה שפיצחתם, תובנה משנת הוראה, או הצגת נושא באחד המפגשים?</div>
-                    <textarea id="contribute" name="contribute"></textarea>
+                    <label for="activity"><span class="num">3.</span>יש פעילות מגניבה שעשית בכיתה ושתרצה/י לשתף בה?</label>
+                    <div class="helper-text">אם כן, כתוב/כתבי עליה כמה מילים.</div>
+                    <textarea id="activity" data-col="פעילות מגניבה לשיתוף"></textarea>
                 </div>
 
                 <div class="field-group">
-                    <label for="knowledge"><span class="num">4.</span>איך נכון לנהל את גוף הידע שלנו?</label>
-                    <div class="helper-text">רעיונות לארגון המאגר באתר הקהילה ב-GitHub, תיוג לפי נושאים וגילאים, ואיך לשמור על קשר בין המפגשים?</div>
-                    <textarea id="knowledge" name="knowledge"></textarea>
+                    <label id="hanukkahLabel"><span class="num">4.</span>האם תגיע/י למפגש חנוכה הפרונטלי (ג' 8.12, נר חמישי, <span dir="ltr">10:00–15:00</span>)?</label>
+                    <div class="choices" role="radiogroup" aria-labelledby="hanukkahLabel">
+                        <label class="choice"><input type="radio" name="hanukkah" value="כן"> כן</label>
+                        <label class="choice"><input type="radio" name="hanukkah" value="לא"> לא</label>
+                        <label class="choice"><input type="radio" name="hanukkah" value="עוד לא יודע/ת"> עוד לא יודע/ת</label>
+                    </div>
+                    <input type="text" id="hanukkahWhy" data-col="הסבר (חנוכה)" placeholder="הסבר" aria-label="הסבר">
                 </div>
 
                 <div class="field-group">
-                    <label for="curious"><span class="num">5.</span>מה או מי מסקרן אתכם?</label>
-                    <div class="helper-text">אנשי מקצוע שהייתם רוצים שנארח, משהו מהמפגש היום שסיקרן אתכם, או אולי קולגה שהייתם רוצים להכיר יותר?</div>
-                    <textarea id="curious" name="curious"></textarea>
+                    <label for="wishes"><span class="num">5.</span>האם יש משהו שהיית רוצה שנעשה במפגש הזה?</label>
+                    <div class="helper-text">משהו שהיית רוצה להעביר / ידע שהיית רוצה לקבל / ...</div>
+                    <textarea id="wishes" data-col="רצונות למפגש חנוכה"></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="host"><span class="num">6.</span>אם את/ה מהמרכז: אפשר להתארח בבית הספר / מרכז המחוננים שלך (או רעיון אחר)?</label>
+                    <div class="helper-text">אם כן, כתוב/כתבי איפה</div>
+                    <textarea id="host" data-col="אירוח (בית ספר / מרכז)"></textarea>
                 </div>
 
                 <div id="submitError" class="error-message"></div>
@@ -309,11 +322,12 @@
     </footer>
 
     <script>
-        // Same Apps Script web app as the registration form; doPost sends form:'reflection' to the "רפלקציה" tab
-        // (_source/math/apps-script-math-reflection.gs)
+        // Same Apps Script web app as the registration form (_source/math/apps-script-math-reflection.gs).
+        // Each meeting has its own tab (TAB), prepared beforehand; every field's data-col = a column title there.
         const GOOGLE_SHEETS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPOfPSucQ3p-Nb5J6K4ra-MxWv8JumNOjfV0TrpkNI-AK9COWuX2wHvwHvAZI5vJ30/exec";
         // Change before each meeting – saved with every answer
-        const MEETING = 'מפגש 1 · פתיחה (20.10)';
+        const MEETING = 'מפגש 2 · אתגרי מחוננים (10.11)';
+        const TAB = 'רפלקציה 10.11';
 
         document.getElementById('meetingTag').textContent = MEETING;
 
@@ -322,7 +336,6 @@
         const btnText = submitBtn.querySelector('.btn-text');
         const btnSpinner = document.getElementById('btnSpinner');
         const submitError = document.getElementById('submitError');
-        const FIELDS = ['fullName', 'takeaway', 'wish', 'contribute', 'knowledge', 'curious'];
 
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -339,8 +352,11 @@
             btnText.textContent = 'שולח...';
             btnSpinner.style.display = 'block';
 
-            const formData = { form: 'reflection', meeting: MEETING };
-            FIELDS.forEach(function (id) { formData[id] = document.getElementById(id).value.trim(); });
+            const answers = {};
+            form.querySelectorAll('[data-col]').forEach(function (el) { answers[el.dataset.col] = el.value.trim(); });
+            const picked = form.querySelector('input[name="hanukkah"]:checked');
+            answers['מגיע/ה למפגש חנוכה (8.12)'] = picked ? picked.value : '';
+            const formData = { form: 'reflection', tab: TAB, answers: answers };
 
             try {
                 if (GOOGLE_SHEETS_SCRIPT_URL) {
