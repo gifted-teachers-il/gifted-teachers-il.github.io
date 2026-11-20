@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>חידות הקהילה | קהילת מורות ומורי מתמטיקה למחוננים</title>
+    <link rel="icon" href="/assets/icon-math.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/icon-math-180.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    <link rel="stylesheet" href="../shared.css">
+    <style>
+        .hero .note { font-size: 0.93rem; color: var(--text-secondary); }
+
+        .example { border: 1px solid var(--border-color); border-radius: var(--radius-md); margin: 0 0 16px; background: #FDFBF8; }
+        .example summary { cursor: pointer; padding: 9px 14px; font-weight: 600; color: var(--primary); font-size: 0.95rem; }
+        .example ul { padding: 0 32px 12px 14px; font-size: 0.93rem; }
+        .example li { margin-bottom: 5px; }
+
+        .puzzles { display: grid; gap: 18px; max-width: 820px; }
+        .pz {
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            padding: 20px 24px; box-shadow: var(--shadow-soft); scroll-margin-top: 16px; transition: box-shadow .25s;
+        }
+        .pz.flash { box-shadow: 0 0 0 3px var(--primary), var(--shadow-lift); }
+        .pz-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+
+        /* Author: looks like a link -> profile popup */
+        .author { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600; font-size: 0.98rem; color: var(--text-primary); }
+        button.author {
+            background: none; border: none; padding: 0; cursor: pointer; color: var(--accent-warm);
+        }
+        button.author .nm { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+        button.author:hover .nm, button.author:focus-visible .nm { color: #A5512F; text-decoration-thickness: 2px; }
+        button.author:focus-visible { outline: 2px solid var(--accent-warm); outline-offset: 3px; border-radius: 999px; }
+        .avatar {
+            width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex: none; background: var(--primary-soft); color: var(--primary);
+            display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 600;
+        }
+        .chips { display: flex; gap: 6px; margin-right: auto; }
+        .chip { background: var(--accent-light); color: #8A4A33; border-radius: 999px; font-size: 0.8rem; padding: 2px 11px; }
+
+        .pz-text { font-size: 1.04rem; margin-bottom: 10px; }
+        .pz-img { max-width: 100%; max-height: 380px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: block; margin: 8px 0 10px; }
+        .pz-meta { font-size: 0.9rem; color: var(--text-secondary); background: #FDFBF8; border-radius: var(--radius-sm); padding: 8px 12px; }
+        .pz-meta:empty { display: none; }
+        .pz-meta b { color: var(--text-primary); font-weight: 600; }
+        .pz-meta div + div { margin-top: 4px; }
+        .pz-foot { display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; margin-top: 12px; font-size: 0.92rem; }
+        .wants { color: var(--text-secondary); }
+
+        .profile-modal { padding-top: 34px; }
+        .profile-modal .pf-name { font-size: 1.35rem; }
+        .profile-modal .to-board { display: block; text-align: center; font-size: 0.88rem; margin-top: 14px; }
+        @media (max-width: 640px) { .pz { padding: 16px 14px; } .example ul { padding-right: 26px; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand-logo">
+                <img class="brand-img" src="../../../assets/sapir-logo.png" width="770" height="193" alt="קהילות ספיר – הבית שלי להתפתחות מקצועית, לזכרה של מתי וייס ז&quot;ל">
+                <img class="brand-img division" src="../../../assets/division-a-outline.png" width="1200" height="179" alt="אגף א' לתלמידים מחוננים ומצטיינים – המנהל הפדגוגי, משרד החינוך">
+            </div>
+            <a class="nav-title" href="../../"><span class="nt-small">קהילת מורות ומורי</span> <span class="nt-big">מתמטיקה למחוננים</span></a>
+        </div>
+    </nav>
+
+    <section class="gate" id="gate" hidden></section>
+
+    <div id="page" hidden>
+        <header class="hero">
+            <div class="hero-inner">
+                <h1>חידות הקהילה</h1>
+                <p>כתבו חידה מתמטית מגניבה שאתם אוהבים, שהעברתם בשיעור או שאתם מתכננים להעביר, ושהייתם מעוניינים לשדרג אותה.</p>
+                <p class="note">שימו לב: כל החידות שיעלו כאן יפורסמו במאגר המשותף לכל חברי וחברות הקהילה.</p>
+                <div class="hero-actions">
+                    <button type="button" class="pill-btn" id="addBtn"><span class="plus">+</span> הוספת חידה</button>
+                    <span class="me-line" id="meLine"></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <form class="panel" id="puzzlePanel" novalidate hidden>
+                <h2>החידה שלי</h2>
+                <details class="example" id="example">
+                    <summary>דוגמה להגשה (של תאיר)</summary>
+                    <ul>
+                        <li><b>החידה:</b> נתונה קובייה שעל הפאות שלה המספרים: $1, 2, 3, -1, -2, -3$. יוצרים משוואה ריבועית $ax^2+bx+c=0$ כאשר $a, b, c$ נקבעים על ידי הטלת הקובייה 3 פעמים. הוכיחו כי ההסתברות לקבלת משוואה עם שני פתרונות גדולה מחצי.</li>
+                        <li><b>מקור החידה:</b> מאגר השאלות לשכבה ט' של מכון ויצמן.</li>
+                        <li><b>קבוצת גיל:</b> חטיבת ביניים (שיעור העשרה).</li>
+                        <li><b>מה הייתי רוצה לשדרג בה:</b> להוסיף סעיפים, שאלות אתגר משמעותיות, וכלי שיעזור בחשיבה על הפתרון.</li>
+                    </ul>
+                </details>
+
+                <div id="nameBox"></div>
+
+                <div class="field-group">
+                    <label for="text">החידה שלכם <span class="required">*</span></label>
+                    <textarea id="text" class="tall"></textarea>
+                    <div class="file-row" style="margin-top:8px">
+                        <label class="file-btn" for="attach">צירוף תמונה או שרטוט</label>
+                        <input type="file" id="attach" accept="image/*" hidden>
+                        <span class="file-name" id="attachName"></span>
+                        <button type="button" class="link-btn" id="attachClear" hidden>הסרה</button>
+                    </div>
+                    <img class="attach-preview" id="attachPreview" alt="" hidden>
+                </div>
+
+                <div class="field-group">
+                    <label for="source">מקור החידה <span class="optional">(מאיפה היא לקוחה? אם ידוע)</span></label>
+                    <input type="text" id="source">
+                </div>
+
+                <div class="field-group">
+                    <span class="label" id="agesLabel">לאיזו קבוצת גיל היא מיועדת? <span class="required">*</span></span>
+                    <div class="choices" role="group" aria-labelledby="agesLabel">
+                        <label class="choice"><input type="checkbox" name="ages" value="יסודי"> יסודי</label>
+                        <label class="choice"><input type="checkbox" name="ages" value="חטיבה"> חטיבה</label>
+                        <label class="choice"><input type="checkbox" name="ages" value="תיכון"> תיכון</label>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="upgrade">מה הייתם רוצים לשדרג בה? <span class="optional">(לא חובה)</span></label>
+                    <textarea id="upgrade"></textarea>
+                </div>
+
+                <div id="submitError" class="error-message"></div>
+                <div class="panel-actions">
+                    <button type="submit" class="pill-btn" id="submitBtn">שליחה</button>
+                    <button type="button" class="pill-btn light" id="cancelBtn">ביטול</button>
+                </div>
+            </form>
+
+            <div class="puzzles" id="puzzles"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>קהילת מורות ומורי מתמטיקה למחוננים | תשפ"ז | בהובלת תאיר פניני ולירון מיכאלי</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+    <script src="../shared.js"></script>
+    <script>
+        let data = null;
+
+        boot(d => {
+            data = d;
+            document.getElementById('page').hidden = false;
+            render();
+            if (location.hash === '#add') openForm();
+        });
+
+        function drawMeLine() {
+            const m = getMe(), line = document.getElementById('meLine');
+            if (!m) { line.innerHTML = ''; return; }
+            line.innerHTML = 'שלום, <b></b> · <button type="button" class="link-btn">לא את/ה?</button>';
+            line.querySelector('b').textContent = m.display;
+            line.querySelector('button').onclick = () => { setMe(null); render(); };
+        }
+
+        function avatar(name) {
+            const c = data.cards[name];
+            if (c && c.photo) return `<img class="avatar" src="${c.photo}" alt="">`;
+            return `<span class="avatar">${esc(name[0])}</span>`;
+        }
+        function authorHtml(name) {
+            if (data.cards[name]) return `<button type="button" class="author" data-profile="${esc(name)}" title="לכרטיס של ${esc(name)}">${avatar(name)}<span class="nm">${esc(name)}</span></button>`;
+            return `<span class="author">${avatar(name)}${esc(name)}</span>`;
+        }
+
+        function render() {
+            drawMeLine();
+            const my = getMe() ? getMe().display : null;
+            const box = document.getElementById('puzzles');
+            const list = data.puzzles.slice().reverse();
+            if (!list.length) { box.innerHTML = '<div class="empty">עוד אין חידות. אפשר להיות הראשונים!</div>'; return; }
+            box.innerHTML = list.map(p => {
+                const w = data.wants[p.id] || [];
+                return `<article class="pz" id="${p.id}">
+                    <div class="pz-top">${authorHtml(p.name)}
+                        <div class="chips">${p.ages.map(a => `<span class="chip">${esc(a)}</span>`).join('')}</div></div>
+                    ${p.text ? `<div class="pz-text">${textHtml(p.text)}</div>` : ''}
+                    ${p.img ? `<img class="pz-img" src="${p.img}" alt="תמונה של החידה">` : ''}
+                    <div class="pz-meta">${p.source ? `<div><b>מקור:</b> ${textHtml(p.source)}</div>` : ''}${p.upgrade ? `<div><b>מה הייתי רוצה לשדרג:</b> ${textHtml(p.upgrade)}</div>` : ''}</div>
+                    <div class="pz-foot">
+                        <label class="choice"><input type="checkbox" data-want="${p.id}" ${my && w.includes(my) ? 'checked' : ''}> בא לי לעבוד על החידה הזו</label>
+                        <span class="wants">${w.length ? 'רוצים לעבוד עליה: ' + w.map(esc).join(', ') : ''}</span>
+                    </div>
+                </article>`;
+            }).join('');
+            renderMath(box);
+            box.querySelectorAll('[data-profile]').forEach(b => b.onclick = () => showProfile(b.dataset.profile));
+            box.querySelectorAll('[data-want]').forEach(cb => cb.onchange = async () => {
+                let m = getMe();
+                if (!m) {
+                    cb.checked = false;
+                    m = await askName('כדי לסמן חידות שבא לך לעבוד עליהן.');
+                    if (!m) return;
+                }
+                try {
+                    data.wants[cb.dataset.want] = await Store.toggleWant(cb.dataset.want, m.display);
+                } catch (x) {
+                    openModal(x.code === 'owner'
+                        ? '<h2>אי אפשר לשנות מכאן</h2><p>הסימון הזה נעשה ממכשיר או דפדפן אחר, ואפשר לשנות אותו רק משם.</p>'
+                        : '<h2>משהו השתבש</h2><p>הסימון לא נשמר. כדאי לנסות שוב בעוד רגע.</p>');
+                }
+                render();
+            });
+        }
+
+        function showProfile(name) {
+            openModal(profileHtml(data.cards[name]) + `<a class="to-board" href="../#${memberId(name)}">לכל הכרטיסים בלוח הקהילה</a>`, 'profile-modal');
+        }
+
+        // ---------- Add a puzzle ----------
+        const panel = document.getElementById('puzzlePanel');
+        const nameField = mountNameField(document.getElementById('nameBox'), 'fullName');
+        renderMath(document.getElementById('example'));
+
+        function openForm() {
+            const m = getMe(); if (m) nameField.input.value = m.typed;
+            panel.hidden = false;
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        document.getElementById('addBtn').onclick = openForm;
+        document.getElementById('cancelBtn').onclick = () => { panel.hidden = true; };
+
+        let attachData = '';
+        const attach = document.getElementById('attach'), attachPreview = document.getElementById('attachPreview');
+        const attachName = document.getElementById('attachName'), attachClear = document.getElementById('attachClear');
+        attach.onchange = async () => {
+            const f = attach.files[0]; if (!f) return;
+            attachData = await shrinkImage(f, 1400);
+            attachPreview.src = attachData; attachPreview.hidden = false;
+            attachName.textContent = f.name; attachClear.hidden = false;
+        };
+        function clearAttach() {
+            attachData = ''; attach.value = ''; attachPreview.hidden = true;
+            attachName.textContent = ''; attachClear.hidden = true;
+        }
+        attachClear.onclick = clearAttach;
+
+        panel.addEventListener('submit', async e => {
+            e.preventDefault();
+            const err = document.getElementById('submitError');
+            const fail = (msg, el) => { err.textContent = msg; err.style.display = 'block'; if (el) el.focus(); };
+            err.style.display = 'none';
+            const m = nameField.get();
+            const text = document.getElementById('text').value.trim();
+            const ages = [...panel.querySelectorAll('input[name="ages"]:checked')].map(x => x.value);
+            if (!m) return fail('נא למלא שם מלא.', nameField.input);
+            if (!text && !attachData) return fail('נא לכתוב את החידה.', document.getElementById('text'));
+            if (!ages.length) return fail('נא לסמן קבוצת גיל.');
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true; btn.textContent = 'שולח...';
+            try {
+                const p = { name: m.display, typed: m.typed, text, img: attachData, ages,
+                    source: document.getElementById('source').value.trim(),
+                    upgrade: document.getElementById('upgrade').value.trim() };
+                p.id = await Store.addPuzzle(p);
+                data = await Store.all();
+                panel.hidden = true; panel.reset(); clearAttach();
+                render();
+                const el = document.getElementById(p.id);
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1800);
+                if (!data.cards[m.display]) {
+                    openModal(`<h2>תודה! החידה בלוח</h2>
+                        <p>האם כבר מילאת כרטיס בלוח הקהילה?<br>כך אחרים יוכלו להכיר אותך וליצור קשר לגבי החידה.</p>
+                        <div class="modal-actions"><a class="pill-btn" href="../#card">עוד לא, למילוי הכרטיס</a>
+                        <button type="button" class="pill-btn light" onclick="closeModal()">אחר כך</button></div>`);
+                }
+            } catch (x) {
+                fail('אירעה שגיאה בעת השליחה. אנא נסו שוב או פנו אלינו ישירות.');
+            } finally {
+                btn.disabled = false; btn.textContent = 'שליחה';
+            }
+        });
+    </script>
+</body>
+</html>
