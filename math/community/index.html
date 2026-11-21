@@ -125,10 +125,11 @@
     <script>
         let data = null;
 
-        boot(d => {
+        boot((d, first) => {
             data = d;
             document.getElementById('page').hidden = false;
             render();
+            if (!first) return;
             if (location.hash === '#card') openCard();
             else if (location.hash.startsWith('#m-')) flash(location.hash.slice(1));
         });

@@ -151,11 +151,11 @@
     <script>
         let data = null;
 
-        boot(d => {
+        boot((d, first) => {
             data = d;
             document.getElementById('page').hidden = false;
             render();
-            if (location.hash === '#add') openForm();
+            if (first && location.hash === '#add') openForm();
         });
 
         function drawMeLine() {

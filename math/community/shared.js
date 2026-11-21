@@ -99,8 +99,12 @@ async function api(action, extra) {
     return res.json();
 }
 function apiError(d) { const e = new Error(d.error || 'server'); e.code = d.error; return e; }
+// The last data this browser saw, shown at once on the next visit while fresh data loads (the script takes ~3s).
+const CACHE_STORE = 'gti-cache';
+function readCache() { try { return JSON.parse(safeGet(CACHE_STORE)); } catch (e) { return null; } }
+function writeCache(d) { try { localStorage.setItem(CACHE_STORE, JSON.stringify(d)); } catch (e) { safeDel(CACHE_STORE); } }   // too big (photos) = no cache
 const Store = {
-    async all() { return api('all'); },                       // {ok, members, cards, puzzles, wants} or {ok:false, error:'key'}
+    async all() { const d = await api('all'); if (d && d.ok) writeCache(d); return d; },   // {ok, members, cards, puzzles, wants} or {ok:false, error:'key'}
     async addPuzzle(p) { const d = await api('addPuzzle', { puzzle: p }); if (!d.ok) throw apiError(d); return d.id; },
     async saveCard(c) { const d = await api('saveCard', { card: c }); if (!d.ok) throw apiError(d); },
     async toggleWant(id, name) { const d = await api('toggleWant', { id, name }); if (!d.ok) throw apiError(d); return d.names; }
@@ -162,22 +166,50 @@ function boot(onData) {
             load(true);
         };
     }
-    async function load(typed) {
-        if (!safeGet(KEY_STORE)) return showGate(false);
-        gate.innerHTML = '<div class="loading">טוען…</div>';
-        let d;
-        try { d = await Store.all(); }
-        catch (e) {
-            gate.innerHTML = '<div class="gate-card"><h1>משהו השתבש בטעינה</h1><p>כדאי לרענן את הדף בעוד רגע. אם זה חוזר – כתבו לנו.</p></div>';
-            return;
-        }
-        if (!d.ok && d.error === 'key') { if (!typed) safeDel(KEY_STORE); return showGate(typed); }
-        if (!d.ok) { gate.innerHTML = '<div class="gate-card"><h1>משהו השתבש בטעינה</h1><p>כדאי לרענן את הדף בעוד רגע. אם זה חוזר – כתבו לנו.</p></div>'; return; }
+    // onData(d, first): first = true on the first draw (open #card etc. only then);
+    // with a cached copy the page draws at once and again when the fresh data arrives.
+    let shown = false;
+    function show(d) {
         MEMBERS = d.members || [];
         gate.hidden = true;
-        onData(d);
+        onData(d, !shown);
+        shown = true;
+    }
+    const failHtml = '<div class="gate-card"><h1>משהו השתבש בטעינה</h1><p>כדאי לרענן את הדף בעוד רגע. אם זה חוזר – כתבו לנו.</p></div>';
+    async function load(typed) {
+        if (!safeGet(KEY_STORE)) return showGate(false);
+        const cached = !typed && readCache();
+        if (cached && cached.ok) { show(cached); refreshing(true); }
+        else gate.innerHTML = loaderHtml();
+        let d;
+        try { d = await Store.all(); } catch (e) { d = null; }
+        refreshing(false);
+        if (d && !d.ok && d.error === 'key') {
+            safeDel(CACHE_STORE);
+            if (shown) { location.reload(); return; }   // passcode changed: back to the gate
+            if (!typed) safeDel(KEY_STORE);
+            return showGate(typed);
+        }
+        if (!d || !d.ok) { if (!shown) gate.innerHTML = failHtml; return; }   // with a cached copy: keep showing it
+        show(d);
     }
     load(false);
+}
+
+// "Fetching data" animation (first visit) and a small chip while a cached page refreshes.
+function loaderHtml() {
+    return `<div class="loading" role="status">
+        <div class="loader-tiles" aria-hidden="true"><span>+</span><span>−</span><span>×</span><span>÷</span></div>
+        <div>שולפים נתונים…</div></div>`;
+}
+function refreshing(on) {
+    let chip = document.getElementById('refreshChip');
+    if (!on) { if (chip) chip.remove(); return; }
+    if (chip) return;
+    chip = document.createElement('div');
+    chip.id = 'refreshChip'; chip.className = 'refresh-chip'; chip.setAttribute('role', 'status');
+    chip.innerHTML = '<span class="loader-tiles small" aria-hidden="true"><span>+</span><span>−</span><span>×</span><span>÷</span></span> מעדכנים…';
+    document.body.appendChild(chip);
 }
 
 // ---- Profile card (board grid + popup on the puzzles page) ----

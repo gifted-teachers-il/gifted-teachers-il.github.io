@@ -187,6 +187,37 @@ label.choice { display: flex; align-items: center; gap: 8px; font-weight: 400; m
 .gate .error-message { margin: 12px 0 0; }
 
 .loading { text-align: center; color: var(--text-secondary); padding: 40px 10px; }
+
+/* "Fetching data": four math tiles hopping in a wave */
+.loader-tiles { display: inline-flex; gap: 8px; direction: ltr; margin-bottom: 14px; }
+.loader-tiles span {
+    width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+    font-weight: 700; font-size: 1.15rem; line-height: 1;
+    background: var(--primary-soft); color: var(--primary);
+    animation: tile-hop 1.4s ease-in-out infinite;
+}
+.loader-tiles span:nth-child(even) { background: var(--accent-light); color: var(--accent); }
+.loader-tiles span:nth-child(2) { animation-delay: .15s; }
+.loader-tiles span:nth-child(3) { animation-delay: .3s; }
+.loader-tiles span:nth-child(4) { animation-delay: .45s; }
+@keyframes tile-hop {
+    0%, 60%, 100% { transform: translateY(0) rotate(0); }
+    30% { transform: translateY(-12px) rotate(-8deg); }
+}
+.loader-tiles.small { gap: 3px; margin: 0; vertical-align: middle; }
+.loader-tiles.small span { width: 18px; height: 18px; border-radius: 5px; font-size: .7rem; }
+.loader-tiles.small span { animation-name: tile-hop-small; }
+@keyframes tile-hop-small {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-4px); }
+}
+.refresh-chip {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 50;
+    display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 12px;
+    background: #fff; border: 1px solid var(--border-color); border-radius: 999px;
+    box-shadow: var(--shadow-soft); color: var(--text-secondary); font-size: .85rem;
+}
+@media (prefers-reduced-motion: reduce) { .loader-tiles span { animation: none; } }
 .empty { color: var(--text-secondary); text-align: center; padding: 36px 10px; }
 
 footer {
