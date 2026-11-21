@@ -74,6 +74,7 @@
     <div id="page" hidden>
         <header class="hero">
             <div class="hero-inner">
+                <a class="crumb" href="../">→ מרחב הקהילה</a>
                 <h1>חידות הקהילה</h1>
                 <p>כתבו חידה מתמטית מגניבה שאתם אוהבים, שהעברתם בשיעור או שאתם מתכננים להעביר, ושהייתם מעוניינים לשדרג אותה.</p>
                 <p class="note">שימו לב: כל החידות שיעלו כאן יפורסמו במאגר המשותף לכל חברי וחברות הקהילה.</p>
@@ -217,7 +218,7 @@
         }
 
         function showProfile(name) {
-            openModal(profileHtml(data.cards[name]) + `<a class="to-board" href="../#${memberId(name)}">לכל הכרטיסים בלוח הקהילה</a>`, 'profile-modal');
+            openModal(profileHtml(data.cards[name]) + `<a class="to-board" href="../board/#${memberId(name)}">לכל הכרטיסים בלוח הקהילה</a>`, 'profile-modal');
         }
 
         // ---------- Add a puzzle ----------
@@ -276,7 +277,7 @@
                 if (!data.cards[m.display]) {
                     openModal(`<h2>תודה! החידה בלוח</h2>
                         <p>האם כבר מילאת כרטיס בלוח הקהילה?<br>כך אחרים יוכלו להכיר אותך וליצור קשר לגבי החידה.</p>
-                        <div class="modal-actions"><a class="pill-btn" href="../#card">עוד לא, למילוי הכרטיס</a>
+                        <div class="modal-actions"><a class="pill-btn" href="../board/#card">עוד לא, למילוי הכרטיס</a>
                         <button type="button" class="pill-btn light" onclick="closeModal()">אחר כך</button></div>`);
                 }
             } catch (x) {

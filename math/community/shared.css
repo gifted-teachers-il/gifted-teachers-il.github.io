@@ -196,7 +196,7 @@ label.choice { display: flex; align-items: center; gap: 8px; font-weight: 400; m
     background: var(--primary-soft); color: var(--primary);
     animation: tile-hop 1.4s ease-in-out infinite;
 }
-.loader-tiles span:nth-child(even) { background: var(--accent-light); color: var(--accent); }
+.loader-tiles span:nth-child(even) { background: var(--accent-light); color: var(--accent-warm); }
 .loader-tiles span:nth-child(2) { animation-delay: .15s; }
 .loader-tiles span:nth-child(3) { animation-delay: .3s; }
 .loader-tiles span:nth-child(4) { animation-delay: .45s; }
@@ -244,3 +244,7 @@ footer {
     .name-input { max-width: none; }
     .gate form { flex-direction: column; }
 }
+
+/* Back to the community space (board + puzzles) */
+.crumb { display: inline-block; font-size: 0.88rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 8px; }
+.crumb:hover { color: var(--primary); text-decoration: underline; }

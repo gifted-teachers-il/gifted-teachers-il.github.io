@@ -4,41 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>לוח הקהילה | קהילת מורות ומורי מתמטיקה למחוננים</title>
+    <title>מרחב הקהילה | קהילת מורות ומורי מתמטיקה למחוננים</title>
     <link rel="icon" href="/assets/icon-math.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/assets/icon-math-180.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="shared.css">
+    <script>
+        // Old links to the board (#card, #m-...) now live at board/
+        if (/^#(card|m-)/.test(location.hash)) location.replace('board/' + location.hash);
+    </script>
     <style>
-        .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
-        .mc {
+        .sec { margin-bottom: 34px; }
+        .sec > h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 12px; }
+        .box {
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg);
-            padding: 24px 20px 20px; box-shadow: var(--shadow-soft); scroll-margin-top: 16px;
-            transition: box-shadow .25s, transform .25s;
+            box-shadow: var(--shadow-soft);
         }
-        .mc:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
-        .mc.flash { box-shadow: 0 0 0 3px var(--primary), var(--shadow-lift); }
 
-        /* My card form */
-        .crop-wrap { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-        .crop-stage {
-            position: relative; width: 150px; height: 150px; flex: none; border-radius: 50%; overflow: hidden;
-            background: var(--primary-soft); touch-action: none; user-select: none; cursor: pointer;
-            border: 4px solid #fff; box-shadow: 0 0 0 1px var(--border-color);
+        /* Next meeting */
+        .next { display: flex; gap: 20px; align-items: center; padding: 22px 24px; flex-wrap: wrap; }
+        .next-date {
+            flex: none; width: 84px; height: 84px; border-radius: var(--radius-md); background: var(--primary-soft);
+            color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1;
         }
-        .crop-stage.has-img { cursor: grab; }
-        .crop-stage.dragging { cursor: grabbing; }
-        .crop-stage img { position: absolute; top: 0; left: 0; transform-origin: 0 0; max-width: none; pointer-events: none; }
-        .crop-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--primary); opacity: .45; font-size: 2.6rem; }
-        .crop-side { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-        .crop-hint { font-size: 0.84rem; color: var(--text-secondary); max-width: 260px; }
-        .phone-row { display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; }
-        .phone-row input[type="tel"] { width: 180px; }
-        .phone-row .choice { font-size: 0.92rem; }
-        .phone-note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; }
-        @media (max-width: 640px) { .members { grid-template-columns: 1fr; } }
+        .next-date .d { font-size: 1.7rem; font-weight: 700; }
+        .next-date .w { font-size: 0.85rem; }
+        .next-body { flex: 1; min-width: 200px; }
+        .next-when { font-size: 0.88rem; color: var(--text-secondary); }
+        .next-when b { color: var(--accent-warm); font-weight: 600; }
+        .next-title { font-size: 1.15rem; font-weight: 600; margin: 2px 0 2px; }
+        .next-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* To fill */
+        .todo { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 22px; flex-wrap: wrap; }
+        .todo + .todo { margin-top: 10px; }
+        .todo-t { font-weight: 600; }
+        .todo-s { font-size: 0.88rem; color: var(--text-secondary); }
+
+        /* Spaces */
+        .spaces { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+        .space {
+            display: flex; flex-direction: column; gap: 4px; padding: 18px 20px; text-decoration: none; color: inherit;
+            transition: box-shadow .2s, transform .2s, border-color .2s;
+        }
+        .space:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); border-color: #DCCFBC; }
+        .space-t { font-weight: 600; font-size: 1.05rem; color: var(--primary); }
+        .space-s { font-size: 0.9rem; color: var(--text-secondary); }
+        .space-m { font-size: 0.82rem; color: var(--accent-warm); margin-top: auto; padding-top: 6px; }
+        .space-m:empty { display: none; }
+
+        /* Past meetings */
+        .past { list-style: none; }
+        .past li { padding: 18px 22px; }
+        .past li + li { border-top: 1px solid var(--border-color); }
+        .past-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+        .past-date { font-size: 0.85rem; color: var(--text-secondary); white-space: nowrap; }
+        .past-title { font-weight: 600; }
+        .past-words { color: var(--text-primary); font-size: 0.95rem; margin-top: 4px; max-width: 720px; }
+        .past-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .chip-link {
+            font-size: 0.86rem; padding: 4px 14px; border-radius: 999px; background: var(--gray-chip);
+            color: var(--primary); text-decoration: none; border: 1px solid transparent;
+        }
+        .chip-link:hover { border-color: var(--primary); }
+        .all-link { display: inline-block; margin-top: 12px; font-size: 0.92rem; }
+
+        @media (max-width: 640px) {
+            .spaces { grid-template-columns: 1fr; }
+            .next { padding: 18px; }
+            .next-actions, .next-actions .pill-btn { width: 100%; }
+            .next-actions .pill-btn { justify-content: center; }
+            .todo .pill-btn { width: 100%; justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -57,63 +96,52 @@
     <div id="page" hidden>
         <header class="hero">
             <div class="hero-inner">
-                <h1>לוח הקהילה</h1>
-                <p>בלב של קהילה מקצועית לומדת נמצאים החיבורים ושיתופי הפעולה בינינו. מכיוון שאנחנו נפגשים כרגע באופן מקוון, יצרנו את לוח הקהילה כדי להכיר מעבר לריבועים שעל המסך, ולהקל עלינו להמשיך את הקשרים הפרודוקטיביים והחבריים גם מחוץ למפגשי הקהילה.</p>
-                <p class="lock">🔒 הלוח סגור ומוצג רק לחברות וחברי הקהילה שלנו (באמצעות קוד מוטמע בקישור שקיבלת)</p>
-                <div class="hero-actions">
-                    <button type="button" class="pill-btn" id="myCardBtn"><span class="plus">+</span> הכרטיס שלי</button>
-                    <span class="me-line" id="meLine"></span>
-                </div>
+                <h1>מרחב הקהילה</h1>
+                <p>כל מה שלנו במקום אחד: המפגש הקרוב, מה שמחכה למילוי, הלוחות המשותפים והמפגשים שהיו.</p>
+                <p class="lock">🔒 המרחב סגור ומוצג רק לחברות וחברי הקהילה שלנו (באמצעות קוד מוטמע בקישור שקיבלת)</p>
+                <div class="hero-actions"><span class="me-line" id="meLine"></span></div>
             </div>
         </header>
 
         <div class="main-container">
-            <form class="panel" id="cardPanel" novalidate hidden>
-                <h2 id="cardTitle">הכרטיס שלי</h2>
-                <div id="cardName"></div>
+            <section class="sec" id="nextSec">
+                <h2>המפגש הקרוב</h2>
+                <div class="box next" id="next"></div>
+            </section>
 
-                <div class="field-group">
-                    <span class="label">תמונת פנים</span>
-                    <div class="crop-wrap">
-                        <div class="crop-stage" id="stage">
-                            <img id="cropImg" alt="" hidden>
-                            <div class="crop-empty" id="cropEmpty">☺</div>
-                        </div>
-                        <div class="crop-side">
-                            <label class="file-btn" for="photo" id="photoBtn">העלאת תמונה</label>
-                            <input type="file" id="photo" accept="image/*" hidden>
-                            <div class="crop-hint" id="cropHint" hidden>גררו את התמונה למיקום. להגדלה: גלגלת העכבר, או שתי אצבעות בפלאפון.</div>
-                        </div>
-                    </div>
+            <section class="sec" id="todoSec">
+                <h2>למילוי</h2>
+                <div id="todo"></div>
+            </section>
+
+            <section class="sec">
+                <h2>המרחבים שלנו</h2>
+                <div class="spaces">
+                    <a class="box space" href="puzzles/">
+                        <span class="space-t">חידות הקהילה</span>
+                        <span class="space-s">המאגר המשותף שלנו – וגם החידות למעבדה</span>
+                    </a>
+                    <a class="box space" href="../challenges/">
+                        <span class="space-t">לוח האתגרים</span>
+                        <span class="space-s">סיפורים מהכיתה על האתגרים בהוראת מחוננים</span>
+                    </a>
+                    <a class="box space" href="board/">
+                        <span class="space-t">לוח הקהילה</span>
+                        <span class="space-s">כמה מילים על כל אחת ואחד, ולאילו שיתופי פעולה נשמח</span>
+                        <span class="space-m" id="mCards"></span>
+                    </a>
+                    <a class="box space" href="../materials/">
+                        <span class="space-t">חומרי הקהילה</span>
+                        <span class="space-s">מצגות המפגשים וחומרים לשיתוף</span>
+                    </a>
                 </div>
+            </section>
 
-                <div class="field-group">
-                    <label for="about">כמה מילים עליי ומה מעניין אותי בהוראת המתמטיקה <span class="required">*</span></label>
-                    <textarea id="about"></textarea>
-                </div>
-
-                <div class="field-group">
-                    <label for="collab">לאילו שיתופי פעולה הייתי שמח/ה עם חברים מהקהילה</label>
-                    <textarea id="collab"></textarea>
-                </div>
-
-                <div class="field-group">
-                    <label for="phone">טלפון נייד</label>
-                    <div class="phone-row">
-                        <input type="tel" id="phone" autocomplete="tel" inputmode="tel">
-                        <label class="choice"><input type="checkbox" id="phoneOk"> מאשר/ת להציג את מספר הנייד שלי בלוח הקהילה הסגור ליצירת קשר נוחה.</label>
-                    </div>
-                    <div class="phone-note">בלי סימון – המספר יישאר אצלנו בלבד.</div>
-                </div>
-
-                <div id="cardError" class="error-message"></div>
-                <div class="panel-actions">
-                    <button type="submit" class="pill-btn" id="cardSave">שמירה</button>
-                    <button type="button" class="pill-btn light" id="cardCancel">ביטול</button>
-                </div>
-            </form>
-
-            <div class="members" id="members"></div>
+            <section class="sec" id="pastSec">
+                <h2>מפגשים שהיו</h2>
+                <ul class="box past" id="past"></ul>
+                <a class="all-link" href="../#schedule">ללוח המפגשים המלא</a>
+            </section>
         </div>
     </div>
 
@@ -123,170 +151,97 @@
 
     <script src="shared.js"></script>
     <script>
-        let data = null;
+        // ---- Meetings (as in the schedule on /math/). Update after each meeting:
+        // words = a few words on the meeting; links = its activities and slides; reflection = its form is open now.
+        const MEETINGS = [
+            { date: '2026-10-20', kind: 'zoom', title: 'מפגש מקוון 1 · מטיילות ומשוחחות',
+              words: 'נפגשנו לראשונה: הכרנו דרך תרגילים ובמשימת החדרים, דיברנו על קהילה ועל תוצרים משותפים, ותיאמנו ציפיות לשנה.',
+              links: [{ t: 'מצגת המפגש', u: '../materials/' }] },
+            { date: '2026-11-10', kind: 'zoom', title: 'מפגש מקוון 2 · אתגרי מחוננים',
+              words: 'פתרנו יחד את ציטוט המתמטיקאי/ת הראשון, שיתפנו סיפורים מהכיתה בלוח האתגרים, ושוחחנו במליאה על אופני האיתור של מחוננים.',
+              links: [{ t: 'ציטוט המתמטיקאי/ת 1', u: '../quotes/1/' }, { t: 'לוח האתגרים', u: '../challenges/' }],
+              reflection: true },
+            { date: '2026-11-24', kind: 'zoom', title: 'מפגש מקוון 3' },
+            { date: '2026-12-08', kind: 'f2f', title: 'מפגש חנוכה (נר חמישי) · פנים אל פנים', time: '10:00–15:00' },
+            { date: '2026-12-22', kind: 'zoom', title: 'מפגש מקוון 4' },
+            { date: '2026-12-29', kind: 'date', title: 'דייט מתמטי · מפגש בצמדים', time: 'מועד גמיש' },
+            { date: '2027-01-05', kind: 'zoom', title: 'מפגש מקוון 5' },
+            { date: '2027-01-26', kind: 'zoom', title: 'מפגש מקוון 6' },
+            { date: '2027-02-02', kind: 'zoom', title: 'מפגש מקוון 7' },
+            { date: '2027-02-23', kind: 'async', title: 'יחידה עצמאית', time: 'מועד גמיש' },
+            { date: '2027-03-02', kind: 'zoom', title: 'מפגש מקוון 8' },
+            { date: '2027-03-16', kind: 'zoom', title: 'מפגש מקוון 9' },
+            { date: '2027-03-30', kind: 'zoom', title: 'מפגש מקוון 10' },
+            { date: '2027-04-13', kind: 'zoom', title: 'מפגש מקוון 11' },
+            { date: '2027-05-04', kind: 'date', title: 'דייט מתמטי · מפגש בצמדים', time: 'מועד גמיש' },
+            { date: '2027-05-18', kind: 'async', title: 'יחידה עצמאית', time: 'מועד גמיש' },
+            { date: '2027-06-01', kind: 'zoom', title: 'מפגש מקוון 12 · מסכם' },
+            { date: '2027-06-29', kind: 'f2f', title: 'כנס סיום שנה · פנים אל פנים', time: 'יום מרוכז' }
+        ];
+        const CAL = 'https://calendar.google.com/calendar/u/0?cid=MmU3NGQ5YjE5NDExYTVmZmY0ZmU1NGFkOGE2Y2Q5NjA3MTAyZGFkNWE2YTVhMmRhNDFmZGY4Njg2MzNjY2UxMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t';
+        const DAYS = ['א\'', 'ב\'', 'ג\'', 'ד\'', 'ה\'', 'ו\'', 'ש\''];
 
-        boot((d, first) => {
-            data = d;
-            document.getElementById('page').hidden = false;
-            render();
-            if (!first) return;
-            if (location.hash === '#card') openCard();
-            else if (location.hash.startsWith('#m-')) flash(location.hash.slice(1));
-        });
+        function todayIL() {   // YYYY-MM-DD in Israel
+            return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Jerusalem' }).format(new Date());
+        }
+        function parts(iso) { const [y, m, d] = iso.split('-').map(Number); return { y, m, d, w: DAYS[new Date(y, m - 1, d).getDay()] }; }
+        function shortDate(iso) { const p = parts(iso); return `${p.w} ${p.d}.${p.m}`; }
+        function timeOf(m) { return m.time || (m.kind === 'zoom' ? '20:00–22:15' : ''); }
 
         function drawMeLine() {
             const m = getMe(), line = document.getElementById('meLine');
-            if (!m) { line.innerHTML = ''; return; }
-            line.innerHTML = 'שלום, <b></b> · <button type="button" class="link-btn">לא את/ה?</button>';
-            line.querySelector('b').textContent = m.display;
-            line.querySelector('button').onclick = () => { setMe(null); render(); };
-        }
-        // The card this browser created (only it can be updated from here)
-        function myCard() { return Object.values(data.cards).find(c => c.mine) || null; }
-        function render() {
-            const has = myCard();
-            document.getElementById('myCardBtn').innerHTML = has ? 'עדכון הכרטיס שלי' : '<span class="plus">+</span> הכרטיס שלי';
-            drawMeLine();
-            const names = sortedNames(Object.keys(data.cards));
-            document.getElementById('members').innerHTML = names.length
-                ? names.map(n => `<article class="mc" id="${memberId(n)}">${profileHtml(data.cards[n])}</article>`).join('')
-                : '<div class="empty">עוד אין כרטיסים. אפשר להיות הראשונים!</div>';
-        }
-        function flash(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1800);
+            line.textContent = m ? `שלום, ${m.display} 👋` : '';
         }
 
-        // ---------- My card form ----------
-        const panel = document.getElementById('cardPanel');
-        const nameField = mountNameField(document.getElementById('cardName'), 'cardFullName');
-        let existingPhoto = '';
-
-        function fillFrom(c) {
-            document.getElementById('cardTitle').textContent = c ? 'עדכון הכרטיס שלי' : 'הכרטיס שלי';
-            document.getElementById('about').value = c ? c.about || '' : '';
-            document.getElementById('collab').value = c ? c.collab || '' : '';
-            document.getElementById('phone').value = c ? c.phone || '' : '';
-            document.getElementById('phoneOk').checked = !!(c && c.phoneOk);
-            if (c && c.photo) { loadSrc(c.photo); existingPhoto = c.photo; } else clearPhoto();
-        }
-        function openCard() {
-            const m = getMe(), mine = myCard();
-            nameField.input.value = mine ? mine.typed || mine.name : (m ? m.typed : '');
-            panel.hidden = false;   // before fillFrom: the crop needs the stage size
-            fillFrom(mine);
-            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        document.getElementById('myCardBtn').onclick = openCard;
-        document.getElementById('cardCancel').onclick = () => { panel.hidden = true; };
-
-        // Round crop (saved square): drag to place, wheel / two fingers to zoom
-        const OUT = 480;
-        const stage = document.getElementById('stage'), img = document.getElementById('cropImg');
-        let natW = 0, natH = 0, base = 1, z = 1, x = 0, y = 0;
-        const S = () => stage.clientWidth;
-        function draw() {
-            const w = natW * base * z, h = natH * base * z;
-            x = Math.min(0, Math.max(S() - w, x)); y = Math.min(0, Math.max(S() - h, y));
-            img.style.transform = `translate(${x}px, ${y}px) scale(${base * z})`;
-        }
-        function setZoom(nz, cx, cy) {
-            nz = Math.min(4, Math.max(1, nz)); const k = nz / z;
-            x = cx - (cx - x) * k; y = cy - (cy - y) * k; z = nz; draw();
-        }
-        function loadSrc(src) {
-            img.onload = () => {
-                natW = img.naturalWidth; natH = img.naturalHeight;
-                img.style.width = natW + 'px'; img.style.height = natH + 'px';
-                base = Math.max(S() / natW, S() / natH); z = 1;
-                x = (S() - natW * base) / 2; y = (S() - natH * base) / 2;
-                img.hidden = false; stage.classList.add('has-img');
-                document.getElementById('cropEmpty').hidden = true;
-                document.getElementById('cropHint').hidden = false;
-                document.getElementById('photoBtn').textContent = 'החלפת תמונה';
-                draw();
-            };
-            img.src = src;
-        }
-        function clearPhoto() {
-            existingPhoto = ''; img.hidden = true; img.removeAttribute('src'); stage.classList.remove('has-img');
-            document.getElementById('cropEmpty').hidden = false;
-            document.getElementById('cropHint').hidden = true;
-            document.getElementById('photoBtn').textContent = 'העלאת תמונה';
-        }
-        document.getElementById('photo').onchange = async e => {
-            const f = e.target.files[0]; if (!f) return;
-            existingPhoto = ''; loadSrc(await shrinkImage(f, 1600)); e.target.value = '';
-        };
-        stage.addEventListener('wheel', e => {
-            if (img.hidden) return;
-            e.preventDefault(); existingPhoto = '';
-            const r = stage.getBoundingClientRect();
-            setZoom(z * (e.deltaY < 0 ? 1.08 : 1 / 1.08), e.clientX - r.left, e.clientY - r.top);
-        }, { passive: false });
-        const pts = new Map(); let pinch0 = null;
-        stage.addEventListener('pointerdown', e => {
-            if (img.hidden) { document.getElementById('photo').click(); return; }
-            existingPhoto = '';
-            stage.setPointerCapture(e.pointerId);
-            pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
-            stage.classList.add('dragging');
-            if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch0 = { d: Math.hypot(a.x - b.x, a.y - b.y), z }; }
-        });
-        stage.addEventListener('pointermove', e => {
-            if (!pts.has(e.pointerId)) return;
-            const prev = pts.get(e.pointerId), cur = { x: e.clientX, y: e.clientY };
-            pts.set(e.pointerId, cur);
-            if (pts.size === 1) { x += cur.x - prev.x; y += cur.y - prev.y; draw(); }
-            else if (pts.size === 2 && pinch0) {
-                const [a, b] = [...pts.values()], r = stage.getBoundingClientRect();
-                setZoom(pinch0.z * Math.hypot(a.x - b.x, a.y - b.y) / pinch0.d, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
-            }
-        });
-        function up(e) { pts.delete(e.pointerId); if (pts.size < 2) pinch0 = null; if (!pts.size) stage.classList.remove('dragging'); }
-        stage.addEventListener('pointerup', up);
-        stage.addEventListener('pointercancel', up);
-        function croppedPhoto() {
-            if (img.hidden) return '';
-            if (existingPhoto) return 'keep';   // unchanged: the script keeps the saved one
-            const s = base * z, c = document.createElement('canvas');
-            c.width = c.height = OUT;
-            c.getContext('2d').drawImage(img, -x / s, -y / s, S() / s, S() / s, 0, 0, OUT, OUT);
-            return c.toDataURL('image/jpeg', 0.85);
+        function drawNext() {
+            const today = todayIL();
+            const m = MEETINGS.find(x => x.date >= today);
+            document.getElementById('nextSec').hidden = !m;
+            if (!m) return;
+            const p = parts(m.date);
+            const days = Math.round((new Date(m.date) - new Date(today)) / 864e5);
+            const when = days === 0 ? '<b>היום</b>' : days === 1 ? '<b>מחר</b>' : `בעוד ${days} ימים`;
+            const t = timeOf(m);
+            document.getElementById('next').innerHTML = `
+                <div class="next-date"><span class="w">יום ${p.w}</span><span class="d">${p.d}.${p.m}</span></div>
+                <div class="next-body">
+                    <div class="next-when">${when}${t ? ` · <span dir="ltr">${esc(t)}</span>` : ''}</div>
+                    <div class="next-title">${esc(m.title)}</div>
+                </div>
+                <div class="next-actions">
+                    ${m.kind === 'zoom' ? '<a class="pill-btn" href="../meeting/">כניסה למפגש המקוון</a>' : ''}
+                    <a class="pill-btn light" href="${CAL}" target="_blank" rel="noopener">הוספה ליומן</a>
+                </div>`;
         }
 
-        panel.addEventListener('submit', async e => {
-            e.preventDefault();
-            const err = document.getElementById('cardError');
-            const fail = (msg, el) => { err.textContent = msg; err.style.display = 'block'; if (el) el.focus(); };
-            err.style.display = 'none';
-            const m = nameField.get();
-            const about = document.getElementById('about').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const phoneOk = document.getElementById('phoneOk').checked;
-            if (!m) return fail('נא למלא שם מלא.', nameField.input);
-            if (!about) return fail('נא לכתוב כמה מילים עליך.', document.getElementById('about'));
-            if (phoneOk && !phone) return fail('סימנת הצגת טלפון – נא למלא מספר.', document.getElementById('phone'));
+        function drawTodo() {
+            const open = MEETINGS.filter(m => m.reflection);
+            document.getElementById('todoSec').hidden = !open.length;
+            document.getElementById('todo').innerHTML = open.map(m => `
+                <div class="box todo">
+                    <div><div class="todo-t">רפלקציה על המפגש</div><div class="todo-s">${esc(m.title)} (${shortDate(m.date)})</div></div>
+                    <a class="pill-btn light" href="../reflection/">למילוי</a>
+                </div>`).join('');
+        }
 
-            const btn = document.getElementById('cardSave');
-            btn.disabled = true; btn.textContent = 'שומר...';
-            try {
-                const card = { name: m.display, typed: m.typed, photo: croppedPhoto(), about,
-                    collab: document.getElementById('collab').value.trim(), phone, phoneOk };
-                await Store.saveCard(card);
-                data = await Store.all();
-                panel.hidden = true;
-                render();
-                history.replaceState(null, '', '#' + memberId(m.display));
-                flash(memberId(m.display));
-            } catch (x) {
-                if (x.code === 'owner') fail('כבר יש בלוח כרטיס בשם הזה, שנוצר ממכשיר או דפדפן אחר. אפשר לעדכן אותו רק משם – או לכתוב לתאיר ונסדר.');
-                else fail('אירעה שגיאה בעת השמירה. אנא נסו שוב או פנו אלינו ישירות.');
-            } finally {
-                btn.disabled = false; btn.textContent = 'שמירה';
-            }
+        function drawPast() {
+            const today = todayIL();
+            const past = MEETINGS.filter(m => m.date < today).reverse();
+            document.getElementById('pastSec').hidden = !past.length;
+            document.getElementById('past').innerHTML = past.map(m => `
+                <li>
+                    <div class="past-head"><span class="past-date">${shortDate(m.date)}</span><span class="past-title">${esc(m.title)}</span></div>
+                    ${m.words ? `<p class="past-words">${esc(m.words)}</p>` : ''}
+                    ${m.links && m.links.length ? `<div class="past-links">${m.links.map(l => `<a class="chip-link" href="${l.u}">${esc(l.t)}</a>`).join('')}</div>` : ''}
+                </li>`).join('');
+        }
+
+
+        boot(d => {
+            document.getElementById('page').hidden = false;
+            drawMeLine(); drawNext(); drawTodo(); drawPast();
+            const nc = Object.keys(d.cards || {}).length;
+            document.getElementById('mCards').textContent = nc ? (nc === 1 ? 'כרטיס אחד בינתיים' : `${nc} כרטיסים`) : '';
         });
     </script>
 </body>

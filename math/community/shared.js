@@ -193,7 +193,7 @@ function boot(onData) {
         if (!d || !d.ok) { if (!shown) gate.innerHTML = failHtml; return; }   // with a cached copy: keep showing it
         show(d);
     }
-    load(false);
+    setTimeout(() => load(false));   // after the page script has run (a cached copy draws at once)
 }
 
 // "Fetching data" animation (first visit) and a small chip while a cached page refreshes.
