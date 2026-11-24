@@ -250,7 +250,7 @@
         <main class="form-card" id="formContainer">
             <div class="form-header">
                 <span class="meeting-tag" id="meetingTag"></span>
-                <h1>רפלקציה – אתגרי מחוננים</h1>
+                <h1>רפלקציה – מחידה לאפליקציה</h1>
                 <p>לא הגעת למפגש היום? נשמח שתמלא/י בכל זאת – אפשר לדלג על השאלה הראשונה.</p>
             </div>
 
@@ -267,19 +267,24 @@
                 </div>
 
                 <div class="field-group">
-                    <label for="booklet"><span class="num">2.</span>איך היית רוצה שתיראה חוברת האתגרים וההתמודדויות?</label>
-                    <div class="helper-text">ידע, מחקר, דוגמאות מהכיתה...</div>
-                    <textarea id="booklet" data-col="איך תיראה חוברת האתגרים"></textarea>
+                    <label for="kitten"><span class="num">2.</span>חידת החתול והאפליקציה: מה היית משפר/ת או מוסיף/ה?</label>
+                    <div class="helper-text">באפליקציה עצמה, ברמזים או באתגרים הנוספים. <a href="https://tair-pnini.github.io/riddles/kitten.html" target="_blank" rel="noopener">לחידת החתול</a></div>
+                    <textarea id="kitten" data-col="חידת החתול – שיפורים"></textarea>
                 </div>
 
                 <div class="field-group">
-                    <label for="activity"><span class="num">3.</span>יש פעילות מגניבה שעשית בכיתה ושתרצה/י לשתף בה?</label>
-                    <div class="helper-text">אם כן, כתוב/כתבי עליה כמה מילים.</div>
-                    <textarea id="activity" data-col="פעילות מגניבה לשיתוף"></textarea>
+                    <label for="created"><span class="num">3.</span>החידה שעבדתם עליה בחדר: מה יצרתם?</label>
+                    <div class="helper-text">אפשר לכתוב את החידה, מה השתנה בה, ולהדביק קישור לאפליקציה אם יש</div>
+                    <textarea id="created" data-col="מה יצרנו בחדר"></textarea>
                 </div>
 
                 <div class="field-group">
-                    <label id="hanukkahLabel"><span class="num">4.</span>האם תגיע/י למפגש חנוכה הפרונטלי (ג' 8.12, נר חמישי, <span dir="ltr">10:00–15:00</span>)?</label>
+                    <label for="continue"><span class="num">4.</span>היית רוצה להמשיך לעבוד על החידה? איך?</label>
+                    <textarea id="continue" data-col="להמשיך לעבוד על החידה – איך"></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label id="hanukkahLabel"><span class="num">5.</span>האם תגיע/י למפגש חנוכה הפרונטלי (ג' 8.12, נר חמישי, <span dir="ltr">10:00–15:00</span>)?</label>
                     <div class="choices" role="radiogroup" aria-labelledby="hanukkahLabel">
                         <label class="choice"><input type="radio" name="hanukkah" value="כן"> כן</label>
                         <label class="choice"><input type="radio" name="hanukkah" value="לא"> לא</label>
@@ -289,15 +294,9 @@
                 </div>
 
                 <div class="field-group">
-                    <label for="wishes"><span class="num">5.</span>האם יש משהו שהיית רוצה שנעשה במפגש הזה?</label>
+                    <label for="wishes"><span class="num">6.</span>האם יש משהו שהיית רוצה שנעשה בפעם הבאה?</label>
                     <div class="helper-text">משהו שהיית רוצה להעביר / ידע שהיית רוצה לקבל / ...</div>
-                    <textarea id="wishes" data-col="רצונות למפגש חנוכה"></textarea>
-                </div>
-
-                <div class="field-group">
-                    <label for="host"><span class="num">6.</span>אם את/ה מהמרכז: אפשר להתארח בבית הספר / מרכז המחוננים שלך (או רעיון אחר)?</label>
-                    <div class="helper-text">אם כן, כתוב/כתבי איפה</div>
-                    <textarea id="host" data-col="אירוח (בית ספר / מרכז)"></textarea>
+                    <textarea id="wishes" data-col="רצונות לפעם הבאה"></textarea>
                 </div>
 
                 <div id="submitError" class="error-message"></div>
@@ -326,8 +325,8 @@
         // Each meeting has its own tab (TAB), prepared beforehand; every field's data-col = a column title there.
         const GOOGLE_SHEETS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPOfPSucQ3p-Nb5J6K4ra-MxWv8JumNOjfV0TrpkNI-AK9COWuX2wHvwHvAZI5vJ30/exec";
         // Change before each meeting – saved with every answer
-        const MEETING = 'מפגש 2 · אתגרי מחוננים (10.11)';
-        const TAB = 'רפלקציה 10.11';
+        const MEETING = 'מפגש 3 · מחידה לאפליקציה (24.11)';
+        const TAB = 'רפלקציה 24.11';
 
         document.getElementById('meetingTag').textContent = MEETING;
 
